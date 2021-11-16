@@ -85,6 +85,7 @@ class HfFamilyMemberController extends Controller
                 'workplace_name' => $request->work_place_name,
                 'workplace_address' => $request->work_place_address,
                 'income' => $request->income,
+                'other' => $request->other,
             ]);
         }
 
