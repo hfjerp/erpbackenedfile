@@ -75,6 +75,7 @@ Route::apiResource('hfShelters', HfShelterController::class );
 Route::apiResource('hfLanguages', HfLanguageController::class );
 Route::apiResource('hfReligions', HfReligionController::class );
 Route::apiResource('hffamilies', HfFamilyController::class);
+Route::GET('getbyjamathffamilies/{id}', [UpdateFamilyController::class,'show3']);
 Route::GET('test/{id}', [UpdateFamilyController::class,'show2']);
 Route::PUT('test/{id}', [UpdateFamilyController::class,'update']);
 Route::post('FamUpdate', [UpdateFamilyController::class,'FamUpdate']);

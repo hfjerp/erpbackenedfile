@@ -34,6 +34,22 @@ class UpdateFamilyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+
+    public function show3($id)
+    {
+        $families = HfFamily::where('jamath_id',$id)->get();
+        $families->map(function($family){
+            $family['imgUrl'] = url($family->ration_img_url);
+            $family->currentFamilyAddress && $family['street'] = $family->currentFamilyAddress->address->street;
+            $family['members'] = $family->familyMember->count();
+            return [
+                $family,
+            ];
+        });
+
+        return response()->json($families);
+    }
     public function store(Request $request)
     {
         //

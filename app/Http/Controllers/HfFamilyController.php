@@ -61,6 +61,23 @@ class HfFamilyController extends Controller
         return response()->json($families);
     }
 
+    public function show3($id)
+    {
+        // $families = HfFamily::where('jamath_id',$id);
+        // $families->map(function($family){
+        //     $family['imgUrl'] = url($family->ration_img_url);
+        //     $family->currentFamilyAddress && $family['street'] = $family->currentFamilyAddress->address->street;
+        //     $family['members'] = $family->familyMember->count();
+        //     return [
+        //         $family,
+        //     ];
+        // });
+
+        return response()->json("ssjsj");
+    }
+
+
+
     /**
      * Store a newly created resource in storage.
      *
@@ -89,6 +106,8 @@ class HfFamilyController extends Controller
             'income'=>$request->income,
             'income_source'=>$request->income_source,
             'user_id'=>$request->user_id,
+            'jamath_id'=>$request->jamath_id,
+
             'language'=>$request->language
         ]);
 
