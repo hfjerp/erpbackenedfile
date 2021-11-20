@@ -107,6 +107,9 @@ Route::get('rationCardTypes', [RationCardTypeController::class, 'index']);
 Route::get('shelterTypes', [MixController::class, 'shelterTypeList']);
 Route::get('shelterOwnerships', [MixController::class, 'shelterOwnershipList']);
 Route::post('analytics',[AnalyticController::class, 'dashboard']);
+Route::get('analytics2/{id}',[AnalyticController::class, 'dashboard2']);
+Route::get('analytics3/{id}',[AnalyticController::class, 'dashboard3']);
+
 Route::get('state-district/{id}', [HfStateController::class, 'districts']);
 Route::get('district-taluk/{id}', [HfDistrictController::class, 'taluks']);
 Route::get('taluk-jamath/{id}', [HfJamathController::class, 'jamaths']);

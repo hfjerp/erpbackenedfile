@@ -27,7 +27,13 @@ class HfLanguageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $Language = HfLanguage::create(['name'=>$request->name]);
+            return response()->json($Language);
+        } catch (\Throwable $th) {
+            return response()->json(['msg'=>"Dublicate Entry"],500);
+        }
+        // return response();
     }
 
     /**
@@ -36,11 +42,13 @@ class HfLanguageController extends Controller
      * @param  \App\Models\HfLanguage  $hfLanguage
      * @return \Illuminate\Http\Response
      */
-    public function show(HfLanguage $hfLanguage)
+    public function show($id)
     {
-        //
-    }
+       $Language=HfLanguage::find($id);
+       
 
+        return response()->json($Language, 200);
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -48,19 +56,28 @@ class HfLanguageController extends Controller
      * @param  \App\Models\HfLanguage  $hfLanguage
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, HfLanguage $hfLanguage)
+    public function update(Request $request,$id)
     {
-        //
+        // $role->update($request->all());
+        // alert("reeeeee");
+        $Language=HfLanguage::find($id);
+        $Language->update([
+            'name'=> $request->name,
+        ]);
+        // $role -> name=$request->input('name');
+        // $role->update();
+        return response()->json($request);
     }
-
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\HfLanguage  $hfLanguage
      * @return \Illuminate\Http\Response
      */
-    public function destroy(HfLanguage $hfLanguage)
+    public function destroy($id)
     {
-        //
+        // $role->delete();
+        $res=HfLanguage::where('id',$id)->delete();
+        return response()->json([$id]);
     }
 }

@@ -27,7 +27,13 @@ class HfFamilyMemberAcademyRelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $Relmajor = HfFamilyMemberRelMajor::create(['name'=>$request->name]);
+            return response()->json($Relmajor);
+        } catch (\Throwable $th) {
+            return response()->json(['msg'=>"Dublicate Entry"],500);
+        }
+        // return response();
     }
 
     /**
@@ -36,11 +42,13 @@ class HfFamilyMemberAcademyRelController extends Controller
      * @param  \App\Models\HfFamilyMemberAcademyMajor  $hfFamilyMemberAcademyMajor
      * @return \Illuminate\Http\Response
      */
-    public function show(HfFamilyMemberRelMajor $HfFamilyMemberRelMajor)
+    public function show($id)
     {
-        //
-    }
+       $Relmajor=HfFamilyMemberRelMajor::find($id);
+       
 
+        return response()->json($Relmajor, 200);
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -48,9 +56,17 @@ class HfFamilyMemberAcademyRelController extends Controller
      * @param  \App\Models\HfFamilyMemberAcademyMajor  $hfFamilyMemberAcademyMajor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, HfFamilyMemberRelMajor $HfFamilyMemberRelMajor)
+    public function update(Request $request,$id)
     {
-        //
+        // $role->update($request->all());
+        // alert("reeeeee");
+        $Relmajor=HfFamilyMemberRelMajor::find($id);
+        $Relmajor->update([
+            'name'=> $request->name,
+        ]);
+        // $role -> name=$request->input('name');
+        // $role->update();
+        return response()->json($request);
     }
 
     /**
@@ -59,8 +75,10 @@ class HfFamilyMemberAcademyRelController extends Controller
      * @param  \App\Models\HfFamilyMemberAcademyMajor  $hfFamilyMemberAcademyMajor
      * @return \Illuminate\Http\Response
      */
-    public function destroy(HfFamilyMemberRelMajor $HfFamilyMemberRelMajor)
+    public function destroy($id)
     {
-        //
+        // $role->delete();
+        $res=HfFamilyMemberRelMajor::where('id',$id)->delete();
+        return response()->json([$id]);
     }
 }

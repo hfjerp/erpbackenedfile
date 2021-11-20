@@ -8,13 +8,13 @@ use App\Models\HfJamath;
 use App\Models\HfUser;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
-
+use DB;
 class AnalyticController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:api');
+    // }
 
     public function dashboard(Request $request)
     {
@@ -77,4 +77,34 @@ class AnalyticController extends Controller
         return response()->json($data);
 
     }
+
+    public function dashboard2($id)
+    {
+        $ress = DB::table('hf_families')
+
+        ->where('hf_families.jamath_id','=',$id)
+        ->get();
+      
+        
+        return response()->json($ress);
+
+    }
+
+    public function dashboard3($id)
+    {
+        $resss = DB::table('hf_family_members')
+
+        ->where('hf_family_members.family_id','=',$id)
+        ->get();
+      
+        
+        return response()->json($resss);
+
+    }
+
+
+
+
+
+
 }

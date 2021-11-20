@@ -27,8 +27,15 @@ class HfFamilyMemberAcademyMajorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $Acamajor = HfFamilyMemberAcademyMajor::create(['name'=>$request->name]);
+            return response()->json($Acamajor);
+        } catch (\Throwable $th) {
+            return response()->json(['msg'=>"Dublicate Entry"],500);
+        }
+        // return response();
     }
+
 
     /**
      * Display the specified resource.
@@ -36,9 +43,12 @@ class HfFamilyMemberAcademyMajorController extends Controller
      * @param  \App\Models\HfFamilyMemberAcademyMajor  $hfFamilyMemberAcademyMajor
      * @return \Illuminate\Http\Response
      */
-    public function show(HfFamilyMemberAcademyMajor $hfFamilyMemberAcademyMajor)
+    public function show($id)
     {
-        //
+       $Acamajor=HfFamilyMemberAcademyMajor::find($id);
+       
+
+        return response()->json($Acamajor, 200);
     }
 
     /**
@@ -48,9 +58,17 @@ class HfFamilyMemberAcademyMajorController extends Controller
      * @param  \App\Models\HfFamilyMemberAcademyMajor  $hfFamilyMemberAcademyMajor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, HfFamilyMemberAcademyMajor $hfFamilyMemberAcademyMajor)
+    public function update(Request $request,$id)
     {
-        //
+        // $role->update($request->all());
+        // alert("reeeeee");
+        $Acamajor=HfFamilyMemberAcademyMajor::find($id);
+        $Acamajor->update([
+            'name'=> $request->name,
+        ]);
+        // $role -> name=$request->input('name');
+        // $role->update();
+        return response()->json($request);
     }
 
     /**
@@ -59,8 +77,10 @@ class HfFamilyMemberAcademyMajorController extends Controller
      * @param  \App\Models\HfFamilyMemberAcademyMajor  $hfFamilyMemberAcademyMajor
      * @return \Illuminate\Http\Response
      */
-    public function destroy(HfFamilyMemberAcademyMajor $hfFamilyMemberAcademyMajor)
+    public function destroy($id)
     {
-        //
+        // $role->delete();
+        $res=HfFamilyMemberAcademyMajor::where('id',$id)->delete();
+        return response()->json([$id]);
     }
 }
