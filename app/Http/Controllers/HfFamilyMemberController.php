@@ -56,7 +56,7 @@ class HfFamilyMemberController extends Controller
             'gender' => $request->gender,
             'marital_status' => $request->marital_status,
             'occupation_type' => $request->occupation_type,
-            'relationship' => $request->relationship,
+            'relationship' => $request->relationship=="Other"?$request->extra_rel:$request->relationship,
         ]);
 
         // ---------------

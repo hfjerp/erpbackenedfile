@@ -33,6 +33,7 @@ use App\Http\Controllers\MixController;
 use App\Http\Controllers\RationCardTypeController;
 use App\Models\Denied;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -79,7 +80,9 @@ Route::GET('getbyjamathffamilies/{id}', [UpdateFamilyController::class,'show3'])
 Route::GET('test/{id}', [UpdateFamilyController::class,'show2']);
 Route::PUT('test/{id}', [UpdateFamilyController::class,'update']);
 Route::post('FamUpdate', [UpdateFamilyController::class,'FamUpdate']);
-
+Route::GET('getjamname/{id}', [HfFamilyReportController::class,'showjamath']);
+Route::get('jamtall/{id}', [HfFamilyReportController::class, 'jamtal']);
+Route::get('jamtaldis/{id}', [HfFamilyReportController::class, 'jamtaldis']);
 Route::apiResource('hfedusupport', HfFamilyMemberAcademySupportController::class);
 Route::apiResource('hfselfsupport', HfFamilyMemberOccupationSupportController::class);
 Route::apiResource('hfpriorsupport', HfFamilyMemberPrioritySupportController::class);
@@ -107,5 +110,6 @@ Route::post('analytics',[AnalyticController::class, 'dashboard']);
 Route::get('state-district/{id}', [HfStateController::class, 'districts']);
 Route::get('district-taluk/{id}', [HfDistrictController::class, 'taluks']);
 Route::get('taluk-jamath/{id}', [HfJamathController::class, 'jamaths']);
+
 Route::get('user-list/{id}', [HfUsersController::class, 'userList']);
 Route::post('denied-access-list/', [DeniedController::class, 'deniedAccess']);

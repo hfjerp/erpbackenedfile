@@ -35,7 +35,7 @@ class HfFamilyMember extends Model
     {
         return $this->hasOne(HfFamilyMemberVoterId::class, 'family_member_id','id');
     }
-    public function bank()
+    public function banki()
     {
         return $this->hasOne(HfFamilyMemberBank::class, 'family_member_id', 'id');
     }
@@ -55,7 +55,7 @@ class HfFamilyMember extends Model
         return $this->hasOne(HfFamilyHead::class, 'family_member_id', 'id');
     }
 
-    public function health()
+    public function healthy()
     {
         return $this->hasOne(HfFamilyMemberHealth::class,'family_member_id', 'id');
     }

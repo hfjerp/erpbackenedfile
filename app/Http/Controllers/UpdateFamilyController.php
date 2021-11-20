@@ -226,7 +226,7 @@ class UpdateFamilyController extends Controller
 
          $family->update([
             // 'family_code' => $this->getFamilyCode(),
-            'name'=>$request['name'],
+            'door_no'=>$request['door'],
             'religion'=>$request->religion,
             'ration_card_type'=>$request->ration_card_type,
             'ration_card_no'=>$request->ration_card_no,
@@ -347,6 +347,22 @@ class UpdateFamilyController extends Controller
             'source' => $request->source,
             'support_required' => $request->support_required,
         ]);
+
+
+        $contact_list = [];
+
+        // $data = $request->contacts;
+        // return response($data);
+
+        $demoArray = json_decode($request->update, true);
+        foreach ((array)$demoArray as $contact) {
+            $update=HfContact::where('id',$contact['id'])->update([
+                
+                'value' => $contact['value'],
+            ]);
+           
+        }
+
 
 
         return response()->json($family, 200);

@@ -99,7 +99,7 @@ class HfFamilyController extends Controller
 
         $family = HfFamily::create([
             'family_code' => $this->getFamilyCode(),
-            'name'=>$request->name,
+            'door_no'=>$request->door,
             'religion'=>$request->religion,
             'ration_card_type'=>$request->ration_card_type,
             'ration_card_no'=>$request->ration_card_no,
@@ -165,7 +165,10 @@ class HfFamilyController extends Controller
 
 
 
-        if($request->has('ration_img_url')){
+        
+
+        $path=null;
+        if($request->hasFile('ration_img_url')){
             $path = $request->file('ration_img_url')->move('families/rationCardImg/'.$family->id);
         }
 
@@ -197,7 +200,8 @@ class HfFamilyController extends Controller
         $hfFamily['account_no']=$hfFamily->bank->account_no;
         $hfFamily['type']=$hfFamily->shelter->type;
         $hfFamily['ownership']=$hfFamily->shelter->ownership;
-        $hfFamily['religions'] = $hfFamily->hfreligion->religions;
+        $hfFamily['religions'] = $hfFamily->hfreligion;
+        // $hfFamily['door_no'] = $hfFamily->door;
         
 
         $hfFamily['bank_name']=$hfFamily->bank->bank_name;

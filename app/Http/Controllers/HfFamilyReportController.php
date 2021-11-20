@@ -8,6 +8,7 @@ use App\Models\HfFamilyMemberBank;
 use App\Models\HfFamilyMemberAcademy;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use DB;
 
 class HfFamilyReportController extends Controller
 {
@@ -65,6 +66,8 @@ class HfFamilyReportController extends Controller
                     return $memberAcademy->academicDetail;
                 });
                 $familyMember->familyMemberCourse && $familyMember['other_course'] = $familyMember->familyMemberCourse->course;
+                $familyMember['banki'] = $familyMember->banki;
+                $familyMember['healthy'] = $familyMember->healthy;
                 $familyMember->familyMemberHobby && $familyMember['hobby'] = $familyMember->familyMemberHobby->hobby;
                 $familyMember->familyMemberSkill && $familyMember['skill'] = $familyMember->familyMemberSkill->skill;
                 $familyMember->familyMemberGoal && $familyMember['goal'] = $familyMember->familyMemberGoal->goal;
@@ -118,7 +121,7 @@ class HfFamilyReportController extends Controller
             $family_report['food'] = $family_report->food;
             $family_report['shelter'] = $family_report->shelter;
             $family_report['bank'] = $family_report->bank;
-            $family_report['banker'] = $family_report->banker;
+            // $family_report['banki'] = $HfFamilyMember->banki;
             $family_report['contacts'] = $family_report->familyContact->map(function ($contact) {
                 if ($contact->contact->contact_type == "Contact No.") {
                     $contact['phone'] = $contact->contact->value;
@@ -147,6 +150,57 @@ class HfFamilyReportController extends Controller
     public function update(Request $request, HfFamily $family_report)
     {
         //
+    }
+
+    public function showjamath($id)
+    {
+       $jam = DB::table("hf_jamaths")
+       ->where('id','=',$id)
+       ->get();
+
+
+       return response()->json([
+           'jam'=> $jam
+        ]);
+
+
+
+        
+    }
+     public function jamtal($id)
+    {
+        $jamtal = DB::table("hf_jamaths")
+       ->join('hf_taluks','hf_taluks.id','hf_jamaths.taluk_id')
+       ->where('hf_jamaths.id','=',$id)
+       ->get();
+
+
+       return response()->json([
+           'jamtal'=> $jamtal
+        ]);
+
+
+
+        
+    } 
+    
+    public function jamtaldis($id)
+    {
+        $jamtaldis = DB::table("hf_jamaths")
+       ->join('hf_taluks','hf_taluks.id','hf_jamaths.taluk_id')
+       ->join('hf_districts','hf_districts.id','hf_taluks.district_id')
+
+       ->where('hf_jamaths.id','=',$id)
+       ->get();
+
+
+       return response()->json([
+           'jamtaldis'=> $jamtaldis
+        ]);
+
+
+
+        
     }
 
     /**
