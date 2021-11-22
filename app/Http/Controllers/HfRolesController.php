@@ -36,12 +36,12 @@ class HfRolesController extends Controller
      */
     public function store(Request $request)
     {
-        try {
+        // try {
             $role = HfRole::create(['name'=>$request->name]);
             return response()->json($role);
-        } catch (\Throwable $th) {
-            return response()->json(['msg'=>"Dublicate Entry"],500);
-        }
+        // } catch (\Throwable $th) {
+        //     return response()->json(['msg'=>"Dublicate Entry"],500);
+        // }
         // return response();
     }
 

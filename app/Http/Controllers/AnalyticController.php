@@ -81,24 +81,53 @@ class AnalyticController extends Controller
     public function dashboard2($id)
     {
         $ress = DB::table('hf_families')
-
         ->where('hf_families.jamath_id','=',$id)
         ->get();
+        $sum = 0;
       
-        
-        return response()->json($ress);
+        for($i = 0;$i < count($ress);$i++){
+            $ids = $ress[$i]->id;
+            $resss = DB::table('hf_family_members')
+            ->where('hf_family_members.family_id','=',$ids)
+            ->get();
+            $a = $resss->count();
+            $sum = $sum + $a;
+        }
 
+        return response()->json([
+            'family' => $ress,
+            'familyMembers' => $sum,
+        ]);
     }
 
     public function dashboard3($id)
     {
-        $resss = DB::table('hf_family_members')
 
-        ->where('hf_family_members.family_id','=',$id)
+        $sum = 0;
+
+        $fams = DB::table('hf_families')
+        ->where('hf_families.jamath_id','=',$id)
         ->get();
       
+        for($i = 0;$i < count($fams);$i++){
+            $ids = $fams[$i]->id;
+
+            $resss = DB::table('hf_family_members')
+
+        ->where('hf_family_members.family_id','=',$ids)
+        ->get();
+        $a = $resss->count();
+        $sum = $sum + $a;
+
+        }
+
+        echo response()->json($sum);
+
+
         
-        return response()->json($resss);
+      
+        
+        
 
     }
 
