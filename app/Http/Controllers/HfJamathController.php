@@ -102,6 +102,16 @@ class HfJamathController extends Controller
         return response()->json(['msg' => "There is no entry of Jamaths for this Taluk"], 500);
     }
 
+
+    public function filterjamaths()
+    {
+        $allJamathss = HfJamath::all();
+        if ($allJamathss) {
+            return response()->json($allJamathss);
+        }
+        return response()->json(['msg' => "There is no entry of Jamaths for this Taluk"], 500);
+    }
+
     public function jamtal($id)
     {
         $allJamaths = HfJamath::where('taluk_id', $id)->get();

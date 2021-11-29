@@ -25,6 +25,7 @@ use App\Models\HfFamilyMemberSkill;
 use App\Models\HfFamilyMemberVoterId;
 use App\Models\HfOccupationDetail;
 use Illuminate\Http\Request;
+use DB;
 // use Carbon\Carbon;
 
 class HfFamilyMemberController extends Controller
@@ -260,6 +261,7 @@ class HfFamilyMemberController extends Controller
             'support_source' => $request->sr_support_source,
             'support_received' => $request->sr_support_received,
             'support_required' => $request->sr_support_required,
+            'support_req_status' => $request->ooooo,
         ]);
 
         HfFamilyMemberAcademySupport::create([
@@ -267,6 +269,7 @@ class HfFamilyMemberController extends Controller
             'support_source' => $request->edu_support_source,
             'support_received' => $request->edu_support_received,
             'support_required' => $request->edu_support_required,
+            'support_req_status' => $request->kkkk,
         ]);
 
         HfFamilyMemberHealthSupport::create([
@@ -274,6 +277,7 @@ class HfFamilyMemberController extends Controller
             'support_source' => $request->hlth_support_source,
             'support_received' => $request->hlth_support_received,
             'support_required' => $request->hlth_support_required,
+            'support_req_status' => $request->hsrd,
         ]);
 
 
@@ -324,6 +328,148 @@ class HfFamilyMemberController extends Controller
         return response()->json($hfFamilyMember);
     }
 
+    public function DashMemList($id)
+
+    {
+ 
+        
+        $exe=DB:: table('hf_family_members')
+
+        ->join('hf_families','hf_families.id','hf_family_members.family_id')
+        ->select('hf_family_members.id as memid','hf_families.*','hf_family_members.*')
+
+        ->where('hf_families.jamath_id','=',$id)
+        ->get();
+        return response()->json($exe);
+    }
+
+    public function SADashMemList()
+
+    {
+ 
+        
+        $exe=DB:: table('hf_family_members')
+
+        ->LeftJoin('hf_families','hf_families.id','hf_family_members.family_id')
+        ->LeftJoin('hf_jamaths','hf_jamaths.id','hf_families.jamath_id')
+        ->LeftJoin('hf_taluks','hf_taluks.id','hf_jamaths.taluk_id')
+        ->LeftJoin('hf_districts','hf_districts.id','hf_taluks.district_id')
+        ->LeftJoin('hf_states','hf_states.id','hf_districts.state_id')
+        ->select('hf_family_members.id as memid','hf_family_members.name as memname','hf_families.*','hf_family_members.*','hf_jamaths.*','hf_taluks.*','hf_districts.*','hf_states.*')
+        ->get();
+        return response()->json($exe);
+    }
+
+
+
+
+    public function SADashMemhealthlist()
+
+    {
+ 
+        
+        $exe=DB:: table('hf_family_members')
+
+        ->LeftJoin('hf_families','hf_families.id','hf_family_members.family_id')
+        ->LeftJoin('hf_jamaths','hf_jamaths.id','hf_families.jamath_id')
+        ->LeftJoin('hf_taluks','hf_taluks.id','hf_jamaths.taluk_id')
+        ->LeftJoin('hf_districts','hf_districts.id','hf_taluks.district_id')
+        ->LeftJoin('hf_states','hf_states.id','hf_districts.state_id')
+        ->LeftJoin('hf_family_member_health_supports','hf_family_member_health_supports.family_member_id','hf_family_members.id')
+
+        ->select('hf_family_members.id as memid','hf_family_members.name as memname','hf_families.*','hf_family_members.*','hf_jamaths.*','hf_taluks.*','hf_districts.*','hf_states.*','hf_family_member_health_supports.*')
+        ->where('hf_family_member_health_supports.support_req_status',"=",'Yes')
+        ->get();
+        return response()->json($exe);
+    }
+    public function SADashMemocclist()
+
+    {
+ 
+        
+        $exe=DB:: table('hf_family_members')
+
+        ->LeftJoin('hf_families','hf_families.id','hf_family_members.family_id')
+        ->LeftJoin('hf_jamaths','hf_jamaths.id','hf_families.jamath_id')
+        ->LeftJoin('hf_taluks','hf_taluks.id','hf_jamaths.taluk_id')
+        ->LeftJoin('hf_districts','hf_districts.id','hf_taluks.district_id')
+        ->LeftJoin('hf_states','hf_states.id','hf_districts.state_id')
+        ->LeftJoin('hf_family_member_occupation_supports','hf_family_member_occupation_supports.family_member_id','hf_family_members.id')
+
+        ->select('hf_family_members.id as memid','hf_family_members.name as memname','hf_families.*','hf_family_members.*','hf_jamaths.*','hf_taluks.*','hf_districts.*','hf_states.*','hf_family_member_occupation_supports.*')
+        ->where('hf_family_member_occupation_supports.support_req_status',"=",'Yes')
+        ->get();
+        return response()->json($exe);
+    }
+    public function SADashMemacalist()
+
+    {
+ 
+        
+        $exe=DB:: table('hf_family_members')
+
+        ->LeftJoin('hf_families','hf_families.id','hf_family_members.family_id')
+        ->LeftJoin('hf_jamaths','hf_jamaths.id','hf_families.jamath_id')
+        ->LeftJoin('hf_taluks','hf_taluks.id','hf_jamaths.taluk_id')
+        ->LeftJoin('hf_districts','hf_districts.id','hf_taluks.district_id')
+        ->LeftJoin('hf_states','hf_states.id','hf_districts.state_id')
+        ->LeftJoin('hf_family_member_academy_supports','hf_family_member_academy_supports.family_member_id','hf_family_members.id')
+
+        ->select('hf_family_members.id as memid','hf_family_members.name as memname','hf_families.*','hf_family_members.*','hf_jamaths.*','hf_taluks.*','hf_districts.*','hf_states.*','hf_family_member_academy_supports.*')
+        ->where('hf_family_member_academy_supports.support_req_status',"=",'Yes')
+        ->get();
+        return response()->json($exe);
+    }
+
+
+    // public function edit($id)
+
+    // {
+    //     // $hfFamilyMember=HfFamilyMember::find($id);
+        
+    //     $hfFamilyMember = HfFamilyMember::where('family_id', $id)->get();
+    //     $hfFamilyMember->map(function ($fam){
+    //     $fam['banki'] = $fam->banki;
+
+        
+
+
+    //     });
+
+    public function edit($id)
+
+    {
+        $hfFamilymem = DB::table('hf_family_members')
+        ->LeftJoin('hf_family_member_health_details','hf_family_member_health_details.family_member_id','hf_family_members.id')
+        ->LeftJoin('hf_family_member_health_supports','hf_family_member_health_supports.family_member_id','hf_family_members.id')
+        ->LeftJoin('hf_occupation_details','hf_occupation_details.family_member_id','hf_family_members.id')
+        ->LeftJoin('hf_family_member_occupation_supports','hf_family_member_occupation_supports.family_member_id','hf_family_members.id')
+        ->LeftJoin('hf_family_member_academies','hf_family_member_academies.family_member_id','hf_family_members.id')
+        ->LeftJoin('hf_academic_details','hf_academic_details.id','hf_family_member_academies.academy_detail_id')
+        ->LeftJoin('hf_family_member_skills','hf_family_member_skills.family_member_id','hf_family_members.id')
+        ->LeftJoin('hf_family_member_hobbies','hf_family_member_hobbies.family_member_id','hf_family_members.id')
+        ->LeftJoin('hf_family_member_goals','hf_family_member_goals.family_member_id','hf_family_members.id')
+        ->LeftJoin('hf_family_member_other_courses','hf_family_member_other_courses.family_member_id','hf_family_members.id')
+        ->LeftJoin('hf_family_member_academy_supports','hf_family_member_academy_supports.family_member_id','hf_family_members.id')
+        ->LeftJoin('hf_family_member_aadhars','hf_family_member_aadhars.family_member_id','hf_family_members.id')
+        ->LeftJoin('hf_family_member_voter_ids','hf_family_member_voter_ids.family_member_id','hf_family_members.id')
+        ->LeftJoin('hf_family_member_banks','hf_family_member_banks.family_member_id','hf_family_members.id')
+        ->LeftJoin('hf_family_member_healths','hf_family_member_healths.family_member_id','hf_family_members.id')
+        ->LeftJoin('hf_family_member_senior_citizens','hf_family_member_senior_citizens.family_member_id','hf_family_members.id')
+        ->LeftJoin('hf_family_member_labours','hf_family_member_labours.family_member_id','hf_family_members.id')
+        ->LeftJoin('hf_family_member_priority_supports','hf_family_member_priority_supports.family_member_id','hf_family_members.id')
+        ->LeftJoin('hf_family_member_contacts','hf_family_member_contacts.family_member_id','hf_family_members.id')
+        ->LeftJoin('hf_contacts','hf_contacts.id','hf_family_member_contacts.contact_id')
+        ->LeftJoin('hf_family_heads','hf_family_heads.family_member_id','hf_family_members.id')
+ 
+        ->select('hf_family_member_occupation_supports.support_required as osrq','hf_family_heads.id as head','hf_family_member_occupation_supports.support_received as osrc','hf_family_member_occupation_supports.support_source as oss','hf_family_member_health_supports.support_required as hsrq','hf_family_member_health_supports.support_received as hsrc','hf_family_member_health_supports.support_source as hss','hf_family_member_academy_supports.support_required as asrq','hf_family_member_academy_supports.support_received as asrc','hf_family_member_academy_supports.support_source as ass','hf_family_member_occupation_supports.*','hf_family_member_health_details.*','hf_family_member_health_supports.*','hf_occupation_details.*','hf_family_member_occupation_supports.*','hf_family_members.*','hf_family_member_academies.*','hf_academic_details.*','hf_family_member_skills.*','hf_family_member_hobbies.*','hf_family_member_goals.*','hf_family_member_other_courses.*','hf_family_member_academy_supports.*','hf_family_member_aadhars.*','hf_family_member_voter_ids.*','hf_family_member_banks.*','hf_family_member_healths.*','hf_family_member_senior_citizens.*','hf_family_member_labours.*','hf_family_member_priority_supports.*','hf_family_member_contacts.*','hf_contacts.*','hf_family_heads.*')
+           
+
+        ->where('hf_family_members.id','=',$id)
+        ->get();
+        
+        return response()->json($hfFamilymem);
+    }
 
     /**
      * Update the specified resource in storage.

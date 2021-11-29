@@ -34,7 +34,20 @@ class UpdateFamilyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function showjamfam($id)
+    {
+        $families = HfFamily::where('jamath_id',$id)->get();
+        $families->map(function($family){
+            $family['imgUrl'] = url($family->ration_img_url);
+            $family->currentFamilyAddress && $family['street'] = $family->currentFamilyAddress->address->street;
+            $family['members'] = $family->familyMember->count();
+            return [
+                $family,
+            ];
+        });
 
+        return response()->json($families);
+    }
 
     public function show3($id)
     {
@@ -50,6 +63,35 @@ class UpdateFamilyController extends Controller
 
         return response()->json($families);
     }
+     public function bplshow($id)
+    {
+        $families = HfFamily::where('jamath_id',$id)
+        ->where('ration_card_type','=','BPL')
+        
+        ->get();
+        $families->map(function($family){
+            $family['imgUrl'] = url($family->ration_img_url);
+            $family->currentFamilyAddress && $family['street'] = $family->currentFamilyAddress->address->street;
+            $family['members'] = $family->familyMember->count();
+            return [
+                $family,
+            ];
+        });
+
+        return response()->json($families);
+    }
+
+
+    public function sabplshow()
+    {
+        $families = HfFamily::where('ration_card_type','=','BPL')->get();
+        
+       
+
+        return response()->json($families);
+    }
+
+
     public function store(Request $request)
     {
         //
@@ -346,6 +388,7 @@ class UpdateFamilyController extends Controller
             // 'family_id' => $family->id,
             'source' => $request->source,
             'support_required' => $request->support_required,
+            'support_req_status' => $request->hsrdd,
         ]);
 
 

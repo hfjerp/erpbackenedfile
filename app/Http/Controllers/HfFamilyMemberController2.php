@@ -306,8 +306,6 @@ class HfFamilyMemberController2 extends Controller
         ->leftJoin('hf_family_member_goals','hf_family_member_goals.family_member_id','hf_family_members.id')
         ->leftJoin('hf_family_member_other_courses','hf_family_member_other_courses.family_member_id','hf_family_members.id')
         ->leftJoin('hf_family_member_rel_majors','hf_family_member_rel_majors.id','hf_academic_details.major')
-        // ->join('hf_family_members','hf_family_members.id','hf_family_member_skills.family_member_id')
-        // ->join('hf_family_members','hf_family_members.id','hf_family_member_goals.family_member_id')
         ->where('hf_family_members.family_id','=',$id)
         ->where('hf_family_members.occupation_type','=','Student')
         ->where('hf_family_member_academies.type','=','Religious')
@@ -316,28 +314,7 @@ class HfFamilyMemberController2 extends Controller
 
 
         
-        // $hfFamilyMember = HfFamilyMember::where('family_id', $id)
-        // ->where('occupation_type','=','Student')->get();
-        // $hfFamilyMember['age'] = Carbon::parse($hfFamilyMember->dob)->age;
-        // $hfFamilyMember['profile_img_url'] = url($hfFamilyMember->profile_img_url);
-        // $hfFamilyMember['name']=$hfFamilyMember->name;
-        // $hfFamily['street']=$hfFamily->currentFamilyAddress->address->street;
-        // $hfFamily['city']=$hfFamily->currentFamilyAddress->address->city;
-        // $hfFamily['state']=$hfFamily->currentFamilyAddress->address->state;
-        // $hfFamily['pincode']=$hfFamily->currentFamilyAddress->address->pincode;
-        // $hfFamily['country']=$hfFamily->currentFamilyAddress->address->country;
-        // $hfFamily['account_no']=$hfFamily->bank->account_no;
-        // $hfFamilyMember['major']=$hfFamilyMember->familyMemberAcademy->major;
-        // $hfFamily['bank_branch']=$hfFamily->bank->bank_branch;
-        // $hfFamily['ifsc_code']=$hfFamily->bank->ifsc_code;
-        
-       // $hfFamily['contacts'] = $hfFamily->familyContact->map(function ($contact){
-        //     return [
-        //         'type'=>$contact->contact->contact_type,
-        //         'value'=>$contact->contact->value
-        //     ];
-        // });
-
+     
         return response()->json($hfFamilyMember);
     }
     public function show2($id)
@@ -360,30 +337,124 @@ class HfFamilyMemberController2 extends Controller
 
 
         
-        // $hfFamilyMember = HfFamilyMember::where('family_id', $id)
-        // ->where('occupation_type','=','Student')->get();
-        // $hfFamilyMember['age'] = Carbon::parse($hfFamilyMember->dob)->age;
-        // $hfFamilyMember['profile_img_url'] = url($hfFamilyMember->profile_img_url);
-        // $hfFamilyMember['name']=$hfFamilyMember->name;
-        // $hfFamily['street']=$hfFamily->currentFamilyAddress->address->street;
-        // $hfFamily['city']=$hfFamily->currentFamilyAddress->address->city;
-        // $hfFamily['state']=$hfFamily->currentFamilyAddress->address->state;
-        // $hfFamily['pincode']=$hfFamily->currentFamilyAddress->address->pincode;
-        // $hfFamily['country']=$hfFamily->currentFamilyAddress->address->country;
-        // $hfFamily['account_no']=$hfFamily->bank->account_no;
-        // $hfFamilyMember['major']=$hfFamilyMember->familyMemberAcademy->major;
-        // $hfFamily['bank_branch']=$hfFamily->bank->bank_branch;
-        // $hfFamily['ifsc_code']=$hfFamily->bank->ifsc_code;
-        
-       // $hfFamily['contacts'] = $hfFamily->familyContact->map(function ($contact){
-        //     return [
-        //         'type'=>$contact->contact->contact_type,
-        //         'value'=>$contact->contact->value
-        //     ];
-        // });
-
+    
         return response()->json($hfFamilyMember2);
     }
+    public function dashshow($id)
+
+    {
+
+        $hfFamilyMember = DB::table('hf_family_members')
+        ->leftJoin('hf_family_member_academies','hf_family_member_academies.family_member_id','hf_family_members.id')
+        ->leftJoin('hf_academic_details','hf_academic_details.id','hf_family_member_academies.academy_detail_id')
+        ->leftJoin('hf_family_member_skills','hf_family_member_skills.family_member_id','hf_family_members.id')
+        ->leftJoin('hf_family_member_hobbies','hf_family_member_hobbies.family_member_id','hf_family_members.id')
+        ->leftJoin('hf_family_member_goals','hf_family_member_goals.family_member_id','hf_family_members.id')
+        ->leftJoin('hf_family_member_other_courses','hf_family_member_other_courses.family_member_id','hf_family_members.id')
+        ->leftJoin('hf_family_member_rel_majors','hf_family_member_rel_majors.id','hf_academic_details.major')
+        ->leftJoin('hf_families','hf_families.id','hf_family_members.family_id')
+        ->where('hf_family_members.occupation_type','=','Student')
+        ->where('hf_family_member_academies.type','=','Religious')
+        ->where('hf_family_member_academies.status','=','Pursuing')
+        ->where('hf_families.jamath_id','=',$id)
+        ->get();
+        
+
+
+        
+     
+        return response()->json($hfFamilyMember);
+    }
+    public function dashshow2($id)
+
+    {
+
+        $hfFamilyMember2 = DB::table('hf_family_members')
+        ->leftJoin('hf_family_member_academies','hf_family_member_academies.family_member_id','hf_family_members.id')
+        ->leftJoin('hf_academic_details','hf_academic_details.id','hf_family_member_academies.academy_detail_id')
+        ->leftJoin('hf_family_member_skills','hf_family_member_skills.family_member_id','hf_family_members.id')
+        ->leftJoin('hf_family_member_hobbies','hf_family_member_hobbies.family_member_id','hf_family_members.id')
+        ->leftJoin('hf_family_member_goals','hf_family_member_goals.family_member_id','hf_family_members.id')
+        ->leftJoin('hf_family_member_other_courses','hf_family_member_other_courses.family_member_id','hf_family_members.id')
+        ->leftJoin('hf_family_member_academy_majors','hf_family_member_academy_majors.id','hf_academic_details.major')
+        ->leftJoin('hf_families','hf_families.id','hf_family_members.family_id')
+        ->where('hf_family_members.occupation_type','=','Student')
+        ->where('hf_family_member_academies.type','=','General')
+        ->where('hf_family_member_academies.status','=','Pursuing')
+        ->where('hf_families.jamath_id','=',$id)
+        ->get();
+        
+
+
+        
+    
+        return response()->json($hfFamilyMember2);
+    }
+
+
+
+
+
+
+
+    public function sadashshow()
+
+    {
+
+        $hfFamilyMember = DB::table('hf_family_members')
+        ->leftJoin('hf_family_member_academies','hf_family_member_academies.family_member_id','hf_family_members.id')
+        ->leftJoin('hf_academic_details','hf_academic_details.id','hf_family_member_academies.academy_detail_id')
+        ->leftJoin('hf_family_member_skills','hf_family_member_skills.family_member_id','hf_family_members.id')
+        ->leftJoin('hf_family_member_hobbies','hf_family_member_hobbies.family_member_id','hf_family_members.id')
+        ->leftJoin('hf_family_member_goals','hf_family_member_goals.family_member_id','hf_family_members.id')
+        ->leftJoin('hf_family_member_other_courses','hf_family_member_other_courses.family_member_id','hf_family_members.id')
+        ->leftJoin('hf_family_member_rel_majors','hf_family_member_rel_majors.id','hf_academic_details.major')
+        ->leftJoin('hf_families','hf_families.id','hf_family_members.family_id')
+        ->where('hf_family_members.occupation_type','=','Student')
+        ->where('hf_family_member_academies.type','=','Religious')
+        ->where('hf_family_member_academies.status','=','Pursuing')
+        ->get();
+        
+
+
+        
+     
+        return response()->json($hfFamilyMember);
+    }
+
+
+
+
+
+
+    public function sadashshow2()
+
+    {
+
+        $hfFamilyMember2 = DB::table('hf_family_members')
+        ->leftJoin('hf_family_member_academies','hf_family_member_academies.family_member_id','hf_family_members.id')
+        ->leftJoin('hf_academic_details','hf_academic_details.id','hf_family_member_academies.academy_detail_id')
+        ->leftJoin('hf_family_member_skills','hf_family_member_skills.family_member_id','hf_family_members.id')
+        ->leftJoin('hf_family_member_hobbies','hf_family_member_hobbies.family_member_id','hf_family_members.id')
+        ->leftJoin('hf_family_member_goals','hf_family_member_goals.family_member_id','hf_family_members.id')
+        ->leftJoin('hf_family_member_other_courses','hf_family_member_other_courses.family_member_id','hf_family_members.id')
+        ->leftJoin('hf_family_member_academy_majors','hf_family_member_academy_majors.id','hf_academic_details.major')
+        ->leftJoin('hf_families','hf_families.id','hf_family_members.family_id')
+        ->where('hf_family_members.occupation_type','=','Student')
+        ->where('hf_family_member_academies.type','=','General')
+        ->where('hf_family_member_academies.status','=','Pursuing')
+    
+        ->get();
+        
+
+
+        
+    
+        return response()->json($hfFamilyMember2);
+    }
+
+
+
 
 
     /**

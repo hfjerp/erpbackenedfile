@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DeniedController;
 use App\Http\Controllers\HfRolesController;
+use App\Http\Controllers\HfAssessMarksController;
 use App\Http\Controllers\HfUsersController;
 use App\Http\Controllers\HfJamathController;
 use App\Http\Controllers\FileUploadController;
@@ -67,6 +68,7 @@ Route::group([
 
 // resource api's
 Route::apiResource('hfRoles', HfRolesController::class );
+Route::put('hfmarksss/{id}', [HfAssessMarksController::class,'store'] );
 Route::apiResource('hfUsers', HfUsersController::class );
 Route::apiResource('hfJamaths', HfJamathController::class );
 Route::apiResource('hfContactTypes', HfContactTypeController::class );
@@ -77,6 +79,9 @@ Route::apiResource('hfLanguages', HfLanguageController::class );
 Route::apiResource('hfReligions', HfReligionController::class );
 Route::apiResource('hffamilies', HfFamilyController::class);
 Route::GET('getbyjamathffamilies/{id}', [UpdateFamilyController::class,'show3']);
+Route::GET('getbyjamathffamiliesbyid/{id}', [UpdateFamilyController::class,'showjamfam']);
+Route::GET('getbyjamathbpl/{id}', [UpdateFamilyController::class,'bplshow']);
+Route::GET('getbyallbpl', [UpdateFamilyController::class,'sabplshow']);
 Route::GET('test/{id}', [UpdateFamilyController::class,'show2']);
 Route::PUT('test/{id}', [UpdateFamilyController::class,'update']);
 Route::post('FamUpdate', [UpdateFamilyController::class,'FamUpdate']);
@@ -89,9 +94,22 @@ Route::apiResource('hfpriorsupport', HfFamilyMemberPrioritySupportController::cl
 Route::apiResource('hfhealsupport', HfFamilyMemberHealthSupportController::class);
 
 Route::apiResource('family-members', HfFamilyMemberController::class);
+Route::GET('DashMemList/{id}', [HfFamilyMemberController::class,'DashMemList']);
+Route::GET('SADashMemList', [HfFamilyMemberController::class,'SADashMemList']);
+Route::GET('SADashMemhealthlist', [HfFamilyMemberController::class,'SADashMemhealthlist']);
+Route::GET('SADashMemocclist', [HfFamilyMemberController::class,'SADashMemocclist']);
+Route::GET('SADashMemacalist', [HfFamilyMemberController::class,'SADashMemacalist']);
+Route::GET('family-membersedit/{id}',[HfFamilyMemberController::class,'edit']);
 Route::apiResource('family-members2', HfFamilyMemberController2::class);
 Route::GET('family-members22/{id}', [HfFamilyMemberController2::class,'show']);
 Route::GET('family-members222/{id}', [HfFamilyMemberController2::class,'show2']);
+
+
+Route::GET('family-dash-members22/{id}', [HfFamilyMemberController2::class,'dashshow']);
+Route::GET('family-dash-members222/{id}', [HfFamilyMemberController2::class,'dashshow2']);
+Route::GET('SAfamily-dash-members22', [HfFamilyMemberController2::class,'sadashshow']);
+Route::GET('SAfamily-dash-members222', [HfFamilyMemberController2::class,'sadashshow2']);
+
 Route::apiResource('family-reports',HfFamilyReportController::class);
 Route::apiResource('hfAcademy-majors', HfFamilyMemberAcademyMajorController::class);
 Route::apiResource('hfRel-majors', HfFamilyMemberAcademyRelController::class);
@@ -111,8 +129,12 @@ Route::get('analytics2/{id}',[AnalyticController::class, 'dashboard2']);
 Route::get('analytics3/{id}',[AnalyticController::class, 'dashboard3']);
 
 Route::get('state-district/{id}', [HfStateController::class, 'districts']);
+Route::get('filter-state-district', [HfStateController::class, 'filterdistricts']);
 Route::get('district-taluk/{id}', [HfDistrictController::class, 'taluks']);
+Route::get('filter-district-taluk', [HfDistrictController::class, 'filtertaluks']);
 Route::get('taluk-jamath/{id}', [HfJamathController::class, 'jamaths']);
+Route::get('filter-taluk-jamath', [HfStateController::class, 'filterjamaths']);
+
 
 Route::get('user-list/{id}', [HfUsersController::class, 'userList']);
 Route::post('denied-access-list/', [DeniedController::class, 'deniedAccess']);

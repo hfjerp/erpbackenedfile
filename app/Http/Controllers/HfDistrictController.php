@@ -80,4 +80,13 @@ class HfDistrictController extends Controller
         }
         return response()->json(['msg' => "There is no entry of district for this state"], 500);
     }
+
+    public function filtertaluks()
+    {
+        $allTaluks = HfTaluk::all();
+        if ($allTaluks) {
+            return response()->json($allTaluks);
+        }
+        return response()->json(['msg' => "There is no entry of district for this state"], 500);
+    }
 }

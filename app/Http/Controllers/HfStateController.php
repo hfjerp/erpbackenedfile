@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\HfDistrict;
+use App\Models\HfJamath;
 use App\Models\HfState;
 use Illuminate\Http\Request;
 
@@ -76,6 +77,24 @@ class HfStateController extends Controller
     public function districts($id)
     {
         $allDistricts = HfDistrict::where('state_id', $id)->get();
+        if ($allDistricts) {
+            return response()->json($allDistricts);
+        }
+        return response()->json(['msg' => "There is no entry of district for this state"], 500);
+    }
+    public function filterjamaths()
+    {
+        $allJamathss = HfJamath::all();
+        if ($allJamathss) {
+            return response()->json($allJamathss);
+        }
+        return response()->json(['msg' => "There is no entry of Jamaths for this Taluk"], 500);
+    }
+
+
+    public function filterdistricts()
+    {
+        $allDistricts = HfDistrict::all();
         if ($allDistricts) {
             return response()->json($allDistricts);
         }

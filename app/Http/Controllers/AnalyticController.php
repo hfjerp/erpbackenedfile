@@ -35,12 +35,35 @@ class AnalyticController extends Controller
             if ($families) {
                 $data['families'] = $families;
             }
+            $bplfamilies = HfFamily::where('ration_card_type','=','BPL')->get();
+            if ($bplfamilies) {
+                $data['bplfamilies'] = $bplfamilies;
+            }
 
             // get total jamaths
-            $jamaths = HfJamath::all();
-            if ($jamaths) {
-                $data['jamaths'] = $jamaths;
-            }
+            // $jamaths = HfJamath::all();
+            // if ($jamaths) {
+            //     $data['jamaths'] = $jamaths;
+            // }
+
+        //     //Student List
+
+        //     // $Student_family_members = HfFamilyMember::where('occupation_type','=','Student')->get();
+        //     // if ($Student_family_members) {
+        //     //     $data['Student_family_members'] = $Student_family_members;
+        //     // }
+
+        //     // --------------------------------------------
+
+            $StudentCount = DB::table('hf_family_members')
+            ->LeftJoin('hf_family_member_academies','hf_family_member_academies.family_member_id','hf_family_members.id')
+            ->LeftJoin('hf_academic_details','hf_academic_details.id','hf_family_member_academies.academy_detail_id')
+            ->select('hf_family_members.id as memberid','hf_family_member_academies.*','hf_academic_details.*','hf_family_members.*')
+
+            ->where('occupation_type','=','Student')
+            ->where('hf_family_member_academies.status','=',"Pursuing")
+            ->where('hf_family_member_academies.type','=',"General")
+            ->get();
 
             // get total family_members
             $family_members = HfFamilyMember::all();
@@ -74,7 +97,12 @@ class AnalyticController extends Controller
             }
 
         }
-        return response()->json($data);
+        return response()->json([
+            'st'=>$StudentCount,
+            'data'=>$data,
+
+
+        ]);
 
     }
 
@@ -92,11 +120,32 @@ class AnalyticController extends Controller
             ->get();
             $a = $resss->count();
             $sum = $sum + $a;
+        } 
+        $student=0;
+        for($i = 0;$i < count($ress);$i++){
+            $idss = $ress[$i]->id;
+            $ressd = DB::table('hf_family_members')
+            ->LeftJoin('hf_family_member_academies','hf_family_member_academies.family_member_id','hf_family_members.id')
+            ->LeftJoin('hf_academic_details','hf_academic_details.id','hf_family_member_academies.academy_detail_id')
+    
+            ->where('hf_family_members.family_id','=',$idss)
+            ->where('hf_family_members.occupation_type','=',"Student")
+            ->where('hf_family_member_academies.type','=',"General")
+            // ->where('hf_family_member_academies.type','=',"General")
+            ->where('hf_family_member_academies.status','=',"Pursuing")
+            ->get();
+            $a = $ressd->count();
+            $student = $student + $a;
         }
-
+        $bpl = DB::table('hf_families')
+        ->where('hf_families.jamath_id','=',$id)
+        ->where('hf_families.ration_card_type','=','BPL')
+        ->get();
         return response()->json([
             'family' => $ress,
             'familyMembers' => $sum,
+            'familyStudent' => $student,
+            'familyBpl' => $bpl,
         ]);
     }
 

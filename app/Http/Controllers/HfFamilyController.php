@@ -135,6 +135,7 @@ class HfFamilyController extends Controller
             'family_id' => $family->id,
             'source' => $request->food_source,
             'support_required' => $request->food_support_required,
+            'support_req_status' => $request->hsrdd,
         ]);
 
         $contact_list = [];
