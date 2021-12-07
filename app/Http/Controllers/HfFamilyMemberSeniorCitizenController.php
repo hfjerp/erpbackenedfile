@@ -34,9 +34,17 @@ class HfFamilyMemberSeniorCitizenController extends Controller
      * @param  \App\Models\HfFamilyMemberSeniorCitizen  $hfFamilyMemberSeniorCitizen
      * @return \Illuminate\Http\Response
      */
-    public function show(HfFamilyMemberSeniorCitizen $hfFamilyMemberSeniorCitizen)
+    public function show2($id)
     {
-        //
+        $hfFamilyMemberSeniorCitizen=HfFamilyMemberSeniorCitizen::find($id);
+        
+        $hfFamilyMemberSeniorCitizen = HfFamilyMemberSeniorCitizen::where('family_member_id', $id)->first();
+        $hfFamilyMemberSeniorCitizen['senior_citizen_card_img_url'] = url($hfFamilyMemberSeniorCitizen->senior_citizen_card_img_url);
+
+       
+
+        return response()->json($hfFamilyMemberSeniorCitizen);
+
     }
 
     /**

@@ -34,9 +34,16 @@ class HfFamilyMemberAadharController extends Controller
      * @param  \App\Models\HfFamilyMemberAadhar  $hfFamilyMemberAadhar
      * @return \Illuminate\Http\Response
      */
-    public function show(HfFamilyMemberAadhar $hfFamilyMemberAadhar)
+    public function show2($id)
     {
-        //
+        $hfFamilyMemberAadhar=HfFamilyMemberAadhar::find($id);
+        
+        $hfFamilyMemberAadhar = HfFamilyMemberAadhar::where('family_member_id', $id)->first();
+        $hfFamilyMemberAadhar['aadhar_card_img_url'] = url($hfFamilyMemberAadhar->aadhar_card_img_url);
+       
+
+        return response()->json($hfFamilyMemberAadhar);
+
     }
 
     /**

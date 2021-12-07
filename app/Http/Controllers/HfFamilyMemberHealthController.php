@@ -34,9 +34,17 @@ class HfFamilyMemberHealthController extends Controller
      * @param  \App\Models\HfFamilyMemberHealth  $hfFamilyMemberHealth
      * @return \Illuminate\Http\Response
      */
-    public function show(HfFamilyMemberHealth $hfFamilyMemberHealth)
+    public function show2($id)
     {
-        //
+        $hfFamilyMemberHealth=HfFamilyMemberHealth::find($id);
+        
+        $hfFamilyMemberHealth = HfFamilyMemberHealth::where('family_member_id', $id)->first();
+        $hfFamilyMemberHealth['health_card_img_url'] = url($hfFamilyMemberHealth->health_card_img_url);
+
+       
+
+        return response()->json($hfFamilyMemberHealth);
+
     }
 
     /**

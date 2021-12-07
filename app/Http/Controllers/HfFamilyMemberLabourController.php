@@ -34,10 +34,19 @@ class HfFamilyMemberLabourController extends Controller
      * @param  \App\Models\HfFamilyMemberLabour  $hfFamilyMemberLabour
      * @return \Illuminate\Http\Response
      */
-    public function show(HfFamilyMemberLabour $hfFamilyMemberLabour)
+    public function show2($id)
     {
-        //
+        $hfFamilyMemberLabour=HfFamilyMemberLabour::find($id);
+        
+        $hfFamilyMemberLabour = HfFamilyMemberLabour::where('family_member_id', $id)->first();
+        $hfFamilyMemberLabour['labour_card_img_url'] = url($hfFamilyMemberLabour->labour_card_img_url);
+
+       
+
+        return response()->json($hfFamilyMemberLabour);
+
     }
+
 
     /**
      * Update the specified resource in storage.

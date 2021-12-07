@@ -23,9 +23,17 @@ class HfFamilyMemberBankController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function show2($id)
     {
-        //
+        $hfFamilyMemberBank=HfFamilyMemberBank::find($id);
+        
+        $hfFamilyMemberBank = HfFamilyMemberBank::where('family_member_id', $id)->first();
+        $hfFamilyMemberBank['passbook_url'] = url($hfFamilyMemberBank->passbook_url);
+
+       
+
+        return response()->json($hfFamilyMemberBank);
+
     }
 
     /**

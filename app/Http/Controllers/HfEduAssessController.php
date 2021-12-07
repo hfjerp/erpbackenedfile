@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\HfMemberEvaluation;
+use App\Models\HfMemberEduAssess;
 use Illuminate\Http\Request;
 use DB;
-class HfAssessMarksController extends Controller
+class HfEduAssessController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,12 +16,12 @@ class HfAssessMarksController extends Controller
     {
         // $user = auth()->user();
         // if($user->marks->id == '1'){
-        //     $HfMemberEvaluation = HfMemberEvaluation::all();
-        //     return response()->json($HfMemberEvaluation);
+        //     $HfMemberEduAssess = HfMemberEduAssess::all();
+        //     return response()->json($HfMemberEduAssess);
         // }else{
-        //     $HfMemberEvaluation = HfMemberEvaluation::where('parent_id',$user->marks->id)->get();
-        //     if($HfMemberEvaluation){
-        //         return response()->json($HfMemberEvaluation);
+        //     $HfMemberEduAssess = HfMemberEduAssess::where('parent_id',$user->marks->id)->get();
+        //     if($HfMemberEduAssess){
+        //         return response()->json($HfMemberEduAssess);
         //     }
         //     return response()->json(['msg'=>"No marks Assign Access"]);
 
@@ -37,11 +37,13 @@ class HfAssessMarksController extends Controller
     public function store(Request $request,$id)
     {
         // try {
-            $marks = HfMemberEvaluation::create([
+            $marks = HfMemberEduAssess::create([
                 
-                'marks'=>$request->marks,
+                'percentage'=>$request->marks,
+                'course'=>$request->course,
+                'year'=>$request->year,
                 'family_member_id'=>$id,
-                'date'=>date("Y-m-d"),
+                
         
         
         
@@ -57,76 +59,47 @@ class HfAssessMarksController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\HfMemberEvaluation  $HfMemberEvaluation
+     * @param  \App\Models\HfMemberEduAssess  $HfMemberEduAssess
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-    //    $marks=HfMemberEvaluation::find($id);
+    //    $marks=HfMemberEduAssess::find($id);
        
 
     //     return response()->json($marks, 200);
     }
     
-    public function AssessLineGraph($id)
+    public function EduAssessLineGraph($id)
     {
 
-        $y = date('Y');
-
-        $arr = [
-            'Jan' => '01',
-            'Feb' => '02',
-            'Mar' => '03',
-            'Apr' => '04',
-            'May' => '05',
-            'Jun' => '06',
-            'Jul' => '07',
-            'Aug' => '08',
-            'Sep' => '09',
-            'Oct' => '10',
-            'Nov' => '11',
-            'Dec' => '12',
-        ];
-        foreach ($arr as $key => $value) {
-            $arr2[] = $y."-".$value; 
-            $m[] = $key;
-       
-        }
-
-        for($i = 0;$i < count($arr2); $i++ ){
-            $mark = DB::table('hf_member_evaluations')
-            ->where('date', 'like',$arr2[$i].'%')
-            ->where('hf_member_evaluations.family_member_id','=',$id)
-            ->get(['marks']);
-
-            
-            $l[] = $line = [
-                'month' =>  $m[$i],
-                'mark' => $mark,
-            ];
+        $Eduline = DB::table('hf_member_edu_assesses')
+        ->where('hf_member_edu_assesses.family_member_id','=',$id)
+        ->orderby('year','ASC')
+        ->get();
 
 
 
 
-        }
+        
 
 
 
-        return response()->json($l);
+        return response()->json($Eduline);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\HfMemberEvaluation  $HfMemberEvaluation
+     * @param  \App\Models\HfMemberEduAssess  $HfMemberEduAssess
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request,$id)
     {
         // $marks->update($request->all());
         // alert("reeeeee");
-        // $marks=HfMemberEvaluation::find($id);
+        // $marks=HfMemberEduAssess::find($id);
         // $marks->update([
         //     'name'=> $request->name,
         // ]);
@@ -139,13 +112,13 @@ class HfAssessMarksController extends Controller
     /**
      * Remove the specified resource from storage.
      
-     * @param  \App\Models\HfMemberEvaluation  $HfMemberEvaluation
+     * @param  \App\Models\HfMemberEduAssess  $HfMemberEduAssess
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         // $marks->delete();
-        // $res=HfMemberEvaluation::where('id',$id)->delete();
+        // $res=HfMemberEduAssess::where('id',$id)->delete();
         // return response()->json([$id]);
     }
 }

@@ -6,7 +6,18 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DeniedController;
 use App\Http\Controllers\HfRolesController;
+use App\Http\Controllers\HfMemberSkillEvaluationController;
+use App\Http\Controllers\HfMemberValuesEvaluationsController;
 use App\Http\Controllers\HfAssessMarksController;
+use App\Http\Controllers\HfFamilyMemberAadharController;
+use App\Http\Controllers\HfFamilyMemberSeniorCitizenController;
+use App\Http\Controllers\HfSkillListsController;
+use App\Http\Controllers\HfValueListsController;
+use App\Http\Controllers\HfFamilyMemberLabourController;
+use App\Http\Controllers\HfFamilyMemberHealthController;
+use App\Http\Controllers\HfFamilyMemberBankController;
+use App\Http\Controllers\HfFamilyMemberVoterIdController;
+use App\Http\Controllers\HfEduAssessController;
 use App\Http\Controllers\HfUsersController;
 use App\Http\Controllers\HfJamathController;
 use App\Http\Controllers\FileUploadController;
@@ -69,6 +80,11 @@ Route::group([
 // resource api's
 Route::apiResource('hfRoles', HfRolesController::class );
 Route::put('hfmarksss/{id}', [HfAssessMarksController::class,'store'] );
+Route::put('hfedumarksss/{id}', [HfEduAssessController::class,'store'] );
+Route::put('hfvalues/{id}', [HfMemberValuesEvaluationsController::class,'store'] );
+Route::put('hfSkills/{id}', [HfMemberSkillEvaluationController::class,'store'] );
+Route::get('AssessLineGraph/{id}', [HfAssessMarksController::class,'AssessLineGraph'] );
+Route::get('EduAssessLineGraph/{id}', [HfEduAssessController::class,'EduAssessLineGraph'] );
 Route::apiResource('hfUsers', HfUsersController::class );
 Route::apiResource('hfJamaths', HfJamathController::class );
 Route::apiResource('hfContactTypes', HfContactTypeController::class );
@@ -77,6 +93,8 @@ Route::apiResource('hffoods', HfFamilyFoodController::class );
 Route::apiResource('hfShelters', HfShelterController::class );
 Route::apiResource('hfLanguages', HfLanguageController::class );
 Route::apiResource('hfReligions', HfReligionController::class );
+Route::apiResource('hfSkills', HfSkillListsController::class );
+Route::apiResource('hfvalue', HfValueListsController::class );
 Route::apiResource('hffamilies', HfFamilyController::class);
 Route::GET('getbyjamathffamilies/{id}', [UpdateFamilyController::class,'show3']);
 Route::GET('getbyjamathffamiliesbyid/{id}', [UpdateFamilyController::class,'showjamfam']);
@@ -89,6 +107,12 @@ Route::GET('getjamname/{id}', [HfFamilyReportController::class,'showjamath']);
 Route::get('jamtall/{id}', [HfFamilyReportController::class, 'jamtal']);
 Route::get('jamtaldis/{id}', [HfFamilyReportController::class, 'jamtaldis']);
 Route::apiResource('hfedusupport', HfFamilyMemberAcademySupportController::class);
+Route::get('hfaadhar/{id}', [HfFamilyMemberAadharController::class,'show2']);
+Route::get('hfvoter/{id}', [HfFamilyMemberVoterIdController::class,'show2']);
+Route::get('hfmemberbank/{id}', [HfFamilyMemberBankController::class,'show2']);
+Route::get('hfmembersenior/{id}', [HfFamilyMemberSeniorCitizenController::class,'show2']);
+Route::get('hfmemberhealth/{id}', [HfFamilyMemberHealthController::class,'show2']);
+Route::get('hfmemberlabour/{id}', [HfFamilyMemberLabourController::class,'show2']);
 Route::apiResource('hfselfsupport', HfFamilyMemberOccupationSupportController::class);
 Route::apiResource('hfpriorsupport', HfFamilyMemberPrioritySupportController::class);
 Route::apiResource('hfhealsupport', HfFamilyMemberHealthSupportController::class);
@@ -127,6 +151,24 @@ Route::get('shelterOwnerships', [MixController::class, 'shelterOwnershipList']);
 Route::post('analytics',[AnalyticController::class, 'dashboard']);
 Route::get('analytics2/{id}',[AnalyticController::class, 'dashboard2']);
 Route::get('analytics3/{id}',[AnalyticController::class, 'dashboard3']);
+Route::post('addmemskillevamarks/{id}',[HfMemberSkillEvaluationController::class, 'store']);
+Route::post('addmemvaluesevamarks/{id}',[HfMemberValuesEvaluationsController::class, 'store']);
+Route::get('SkillAssessLineGraph/{id}',[HfMemberSkillEvaluationController::class, 'SkillAssessLineGraph']);
+Route::get('ValueAssessLineGraph/{id}',[HfMemberValuesEvaluationsController::class, 'ValueAssessLineGraph']);
+Route::get('ComSkillAssesspie/{id}',[HfMemberSkillEvaluationController::class, 'ComSkillAssesspie']);
+Route::get('TeamSkillAssesspie/{id}',[HfMemberSkillEvaluationController::class, 'TeamSkillAssesspie']);
+Route::get('IniSkillAssesspie/{id}',[HfMemberSkillEvaluationController::class, 'IniSkillAssesspie']);
+Route::get('LeaSkillAssesspie/{id}',[HfMemberSkillEvaluationController::class, 'LeaSkillAssesspie']);
+Route::get('PlanSkillAssesspie/{id}',[HfMemberSkillEvaluationController::class, 'PlanSkillAssesspie']);
+
+
+
+Route::get('PatienceAssesspie/{id}',[HfMemberValuesEvaluationsController::class, 'PatienceAssesspie']);
+Route::get('SimplicityAssesspie/{id}',[HfMemberValuesEvaluationsController::class, 'SimplicityAssesspie']);
+Route::get('DisciplineAssesspie/{id}',[HfMemberValuesEvaluationsController::class, 'DisciplineAssesspie']);
+Route::get('HonestyAssesspie/{id}',[HfMemberValuesEvaluationsController::class, 'HonestyAssesspie']);
+Route::get('ConfidenceAssesspie/{id}',[HfMemberValuesEvaluationsController::class, 'ConfidenceAssesspie']);
+
 
 Route::get('state-district/{id}', [HfStateController::class, 'districts']);
 Route::get('filter-state-district', [HfStateController::class, 'filterdistricts']);

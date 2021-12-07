@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\HfMemberEvaluation;
+use App\Models\HfValuesLists;
 use Illuminate\Http\Request;
 use DB;
-class HfAssessMarksController extends Controller
+class HfValueListsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,18 +14,9 @@ class HfAssessMarksController extends Controller
      */
     public function index()
     {
-        // $user = auth()->user();
-        // if($user->marks->id == '1'){
-        //     $HfMemberEvaluation = HfMemberEvaluation::all();
-        //     return response()->json($HfMemberEvaluation);
-        // }else{
-        //     $HfMemberEvaluation = HfMemberEvaluation::where('parent_id',$user->marks->id)->get();
-        //     if($HfMemberEvaluation){
-        //         return response()->json($HfMemberEvaluation);
-        //     }
-        //     return response()->json(['msg'=>"No marks Assign Access"]);
+        $allValues = HfValuesLists::all();
 
-        // }
+        return response()->json($allValues, 200);
     }
 
     /**
@@ -37,7 +28,7 @@ class HfAssessMarksController extends Controller
     public function store(Request $request,$id)
     {
         // try {
-            $marks = HfMemberEvaluation::create([
+            $marks = HfValuesListsController::create([
                 
                 'marks'=>$request->marks,
                 'family_member_id'=>$id,
@@ -57,12 +48,12 @@ class HfAssessMarksController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\HfMemberEvaluation  $HfMemberEvaluation
+     * @param  \App\Models\HfValuesLists  $HfValuesListsController
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-    //    $marks=HfMemberEvaluation::find($id);
+    //    $marks=HfValuesListsController::find($id);
        
 
     //     return response()->json($marks, 200);
@@ -119,14 +110,14 @@ class HfAssessMarksController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\HfMemberEvaluation  $HfMemberEvaluation
+     * @param  \App\Models\HfValuesLists  $HfValuesListsController
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request,$id)
     {
         // $marks->update($request->all());
         // alert("reeeeee");
-        // $marks=HfMemberEvaluation::find($id);
+        // $marks=HfValuesListsController::find($id);
         // $marks->update([
         //     'name'=> $request->name,
         // ]);
@@ -139,13 +130,13 @@ class HfAssessMarksController extends Controller
     /**
      * Remove the specified resource from storage.
      
-     * @param  \App\Models\HfMemberEvaluation  $HfMemberEvaluation
+     * @param  \App\Models\HfValuesLists  $HfValuesListsController
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         // $marks->delete();
-        // $res=HfMemberEvaluation::where('id',$id)->delete();
+        // $res=HfValuesListsController::where('id',$id)->delete();
         // return response()->json([$id]);
     }
 }

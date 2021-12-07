@@ -34,9 +34,17 @@ class HfFamilyMemberVoterIdController extends Controller
      * @param  \App\Models\HfFamilyMemberVoterId  $hfFamilyMemberVoterId
      * @return \Illuminate\Http\Response
      */
-    public function show(HfFamilyMemberVoterId $hfFamilyMemberVoterId)
+    public function show2($id)
     {
-        //
+        $hfFamilyMemberVoterId=HfFamilyMemberVoterId::find($id);
+        
+        $hfFamilyMemberVoterId = HfFamilyMemberVoterId::where('family_member_id', $id)->first();
+        $hfFamilyMemberVoterId['voter_id_card_img_url'] = url($hfFamilyMemberVoterId->voter_id_card_img_url);
+
+       
+
+        return response()->json($hfFamilyMemberVoterId);
+
     }
 
     /**
