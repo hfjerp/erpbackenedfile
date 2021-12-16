@@ -50,33 +50,33 @@ class HfMemberSkillEvaluationController extends Controller
                 'marks'=>$request->communication,
                 'skl_id'=>$communication,
                 'family_member_id'=>$id,
-                'date'=>date("Y-m-d"),
+                'date'=>$request->month,
             ]); 
             $marks = HfMemberSkillEvaluation::create([
                 'marks'=>$request->teamwork,
                 'skl_id'=>$teamwork,
                 'family_member_id'=>$id,
-                'date'=>date("Y-m-d"),
+                'date'=>$request->month,
             ]);
             
             $marks = HfMemberSkillEvaluation::create([
                 'marks'=>$request->initiative,
                 'skl_id'=>$initiative,
                 'family_member_id'=>$id,
-                'date'=>date("Y-m-d"),
+                'date'=>$request->month,
             ]);
                 $marks = HfMemberSkillEvaluation::create([
                 'marks'=>$request->leadership,
                 'skl_id'=>$leadership,
                 'family_member_id'=>$id,
-                'date'=>date("Y-m-d"),
+                'date'=>$request->month,
 
                 ]);
                 $marks = HfMemberSkillEvaluation::create([
                 'marks'=>$request->planning,
                 'skl_id'=>$planning,
                 'family_member_id'=>$id,
-                'date'=>date("Y-m-d"),
+                'date'=>$request->month,
         
         
         

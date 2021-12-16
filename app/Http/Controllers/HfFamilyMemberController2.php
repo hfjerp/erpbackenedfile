@@ -306,6 +306,7 @@ class HfFamilyMemberController2 extends Controller
         ->leftJoin('hf_family_member_goals','hf_family_member_goals.family_member_id','hf_family_members.id')
         ->leftJoin('hf_family_member_other_courses','hf_family_member_other_courses.family_member_id','hf_family_members.id')
         ->leftJoin('hf_family_member_rel_majors','hf_family_member_rel_majors.id','hf_academic_details.major')
+        ->select('hf_family_members.name as member_name','hf_family_member_rel_majors.name as rel_major_name','hf_family_member_academies.*','hf_academic_details.*','hf_family_member_skills.*','hf_family_member_hobbies.*','hf_family_member_goals.*','hf_family_member_other_courses.*','hf_family_member_rel_majors.*','hf_family_members.*')
         ->where('hf_family_members.family_id','=',$id)
         ->where('hf_family_members.occupation_type','=','Student')
         ->where('hf_family_member_academies.type','=','Religious')
@@ -329,6 +330,7 @@ class HfFamilyMemberController2 extends Controller
         ->leftJoin('hf_family_member_goals','hf_family_member_goals.family_member_id','hf_family_members.id')
         ->leftJoin('hf_family_member_other_courses','hf_family_member_other_courses.family_member_id','hf_family_members.id')
         ->leftJoin('hf_family_member_academy_majors','hf_family_member_academy_majors.id','hf_academic_details.major')
+        ->select('hf_family_members.name as member_name','hf_family_member_academy_majors.name as gen_major_name','hf_family_member_academies.*','hf_academic_details.*','hf_family_member_skills.*','hf_family_member_hobbies.*','hf_family_member_goals.*','hf_family_member_other_courses.*','hf_family_member_academy_majors.*','hf_family_members.*')
         ->where('hf_family_members.family_id','=',$id)
         ->where('hf_family_members.occupation_type','=','Student')
         ->where('hf_family_member_academies.type','=','General')
@@ -353,6 +355,8 @@ class HfFamilyMemberController2 extends Controller
         ->leftJoin('hf_family_member_other_courses','hf_family_member_other_courses.family_member_id','hf_family_members.id')
         ->leftJoin('hf_family_member_rel_majors','hf_family_member_rel_majors.id','hf_academic_details.major')
         ->leftJoin('hf_families','hf_families.id','hf_family_members.family_id')
+        ->select('hf_family_members.name as member_name','hf_family_member_rel_majors.name as rel_major_name','hf_family_member_academies.*','hf_academic_details.*','hf_family_member_skills.*','hf_family_member_hobbies.*','hf_family_member_goals.*','hf_family_member_other_courses.*','hf_family_member_rel_majors.*','hf_family_members.*')
+
         ->where('hf_family_members.occupation_type','=','Student')
         ->where('hf_family_member_academies.type','=','Religious')
         ->where('hf_family_member_academies.status','=','Pursuing')
@@ -378,6 +382,8 @@ class HfFamilyMemberController2 extends Controller
         ->leftJoin('hf_family_member_other_courses','hf_family_member_other_courses.family_member_id','hf_family_members.id')
         ->leftJoin('hf_family_member_academy_majors','hf_family_member_academy_majors.id','hf_academic_details.major')
         ->leftJoin('hf_families','hf_families.id','hf_family_members.family_id')
+        ->select('hf_family_members.name as member_name','hf_family_member_academy_majors.name as gen_major_name','hf_family_member_academies.*','hf_academic_details.*','hf_family_member_skills.*','hf_family_member_hobbies.*','hf_family_member_goals.*','hf_family_member_other_courses.*','hf_family_member_academy_majors.*','hf_family_members.*')
+
         ->where('hf_family_members.occupation_type','=','Student')
         ->where('hf_family_member_academies.type','=','General')
         ->where('hf_family_member_academies.status','=','Pursuing')
@@ -410,6 +416,8 @@ class HfFamilyMemberController2 extends Controller
         ->leftJoin('hf_family_member_other_courses','hf_family_member_other_courses.family_member_id','hf_family_members.id')
         ->leftJoin('hf_family_member_rel_majors','hf_family_member_rel_majors.id','hf_academic_details.major')
         ->leftJoin('hf_families','hf_families.id','hf_family_members.family_id')
+        ->select('hf_family_members.name as member_name','hf_family_member_rel_majors.name as rel_major_name','hf_family_member_academies.*','hf_academic_details.*','hf_family_member_skills.*','hf_family_member_hobbies.*','hf_family_member_goals.*','hf_family_member_other_courses.*','hf_family_member_rel_majors.*','hf_family_members.*')
+
         ->where('hf_family_members.occupation_type','=','Student')
         ->where('hf_family_member_academies.type','=','Religious')
         ->where('hf_family_member_academies.status','=','Pursuing')
@@ -440,6 +448,8 @@ class HfFamilyMemberController2 extends Controller
         ->leftJoin('hf_family_member_other_courses','hf_family_member_other_courses.family_member_id','hf_family_members.id')
         ->leftJoin('hf_family_member_academy_majors','hf_family_member_academy_majors.id','hf_academic_details.major')
         ->leftJoin('hf_families','hf_families.id','hf_family_members.family_id')
+        ->select('hf_family_members.name as member_name','hf_family_member_academy_majors.name as gen_major_name','hf_family_member_academies.*','hf_academic_details.*','hf_family_member_skills.*','hf_family_member_hobbies.*','hf_family_member_goals.*','hf_family_member_other_courses.*','hf_family_member_academy_majors.*','hf_family_members.*')
+
         ->where('hf_family_members.occupation_type','=','Student')
         ->where('hf_family_member_academies.type','=','General')
         ->where('hf_family_member_academies.status','=','Pursuing')

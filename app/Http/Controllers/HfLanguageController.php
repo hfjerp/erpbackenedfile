@@ -27,12 +27,12 @@ class HfLanguageController extends Controller
      */
     public function store(Request $request)
     {
-        try {
+        // try {
             $Language = HfLanguage::create(['name'=>$request->name]);
             return response()->json($Language);
-        } catch (\Throwable $th) {
+        // } catch (\Throwable $th) {
             return response()->json(['msg'=>"Dublicate Entry"],500);
-        }
+        // }
         // return response();
     }
 

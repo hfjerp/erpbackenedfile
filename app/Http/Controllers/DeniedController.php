@@ -40,6 +40,49 @@ class DeniedController extends Controller
         return response()->json(['msg'=>"Successfully Added New Entries"]);
     }
 
+
+
+    public function deniednewstore(Request $request,$fieldname,$jam)
+    {
+        $data = $request->all();
+        // $accountCategoryId = $request->account_category_id;
+        // foreach ($data as $column ) {
+        if($request->status == "lock"){
+            Denied::create(
+                [
+                    'jamath_id' => $jam,
+                    'access_name' => $fieldname,
+                    
+                ]
+            );
+            return response()->json([
+                'status' => 200,
+                'res' => "iam devil",
+            ]);
+        }else{
+
+        $res=Denied::where('jamath_id',$jam)
+        ->where('access_name',$fieldname)
+        
+        
+        ->delete();
+
+
+            return response()->json([
+                'status' => 200,
+                'res' => "iam delete",
+            ]);
+    
+        }
+           
+
+        
+       
+
+
+    }
+
+
     /**
      * Display the specified resource.
      *
@@ -69,14 +112,29 @@ class DeniedController extends Controller
      * @param  \App\Models\Denied  $denied
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Denied $denied)
+    public function destroy($fieldname,$jam)
     {
-        //
+        // $role->delete();
+        $res=Denied::where('jamath_id',$jam)
+        ->where('access_name',$fieldname)
+        
+        
+        ->delete();
+        return response()->json([$jam]);
     }
 
     public function deniedAccess(Request $request)
     {
         $deniedList = Denied::where('jamath_id', $request->jamath_id)->get();
+        if($deniedList){
+            return response()->json($deniedList);
+        }
+        return response()->json(['msg'=>"There is no denied access"],500);
+    } 
+    
+    public function deniedAccessSA(Request $request,$id)
+    {
+        $deniedList = Denied::where('jamath_id', $id)->get();
         if($deniedList){
             return response()->json($deniedList);
         }

@@ -13,6 +13,7 @@ use App\Http\Controllers\HfFamilyMemberAadharController;
 use App\Http\Controllers\HfFamilyMemberSeniorCitizenController;
 use App\Http\Controllers\HfSkillListsController;
 use App\Http\Controllers\HfValueListsController;
+use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\HfFamilyMemberLabourController;
 use App\Http\Controllers\HfFamilyMemberHealthController;
 use App\Http\Controllers\HfFamilyMemberBankController;
@@ -87,8 +88,10 @@ Route::get('AssessLineGraph/{id}', [HfAssessMarksController::class,'AssessLineGr
 Route::get('EduAssessLineGraph/{id}', [HfEduAssessController::class,'EduAssessLineGraph'] );
 Route::apiResource('hfUsers', HfUsersController::class );
 Route::apiResource('hfJamaths', HfJamathController::class );
+Route::delete('hfJamathsdelete/{id}', [HfJamathController::class,'destroy2'] );
 Route::apiResource('hfContactTypes', HfContactTypeController::class );
 Route::apiResource('hfContactnew', HfContactController::class );
+Route::GET('hfContactnew2/{id}', [HfContactController::class,'show2'] );
 Route::apiResource('hffoods', HfFamilyFoodController::class );
 Route::apiResource('hfShelters', HfShelterController::class );
 Route::apiResource('hfLanguages', HfLanguageController::class );
@@ -124,6 +127,7 @@ Route::GET('SADashMemhealthlist', [HfFamilyMemberController::class,'SADashMemhea
 Route::GET('SADashMemocclist', [HfFamilyMemberController::class,'SADashMemocclist']);
 Route::GET('SADashMemacalist', [HfFamilyMemberController::class,'SADashMemacalist']);
 Route::GET('family-membersedit/{id}',[HfFamilyMemberController::class,'edit']);
+Route::POST('updatememform',[HfFamilyMemberController::class,'updatememform']);
 Route::apiResource('family-members2', HfFamilyMemberController2::class);
 Route::GET('family-members22/{id}', [HfFamilyMemberController2::class,'show']);
 Route::GET('family-members222/{id}', [HfFamilyMemberController2::class,'show2']);
@@ -138,6 +142,8 @@ Route::apiResource('family-reports',HfFamilyReportController::class);
 Route::apiResource('hfAcademy-majors', HfFamilyMemberAcademyMajorController::class);
 Route::apiResource('hfRel-majors', HfFamilyMemberAcademyRelController::class);
 Route::apiResource('access-denied',DeniedController::class);
+Route::post('access-deniednew/{id}/{jam}',[DeniedController::class,'deniednewstore']);
+Route::delete('access-denieddelete/{id}/{jam}',[DeniedController::class,'destroy']);
 Route::apiResource('state',HfStateController::class);
 Route::apiResource('district',HfDistrictController::class);
 Route::apiResource('taluk',HfTalukController::class);
@@ -148,7 +154,7 @@ Route::get('files', [FileUploadController::class, 'files'] );
 Route::get('rationCardTypes', [RationCardTypeController::class, 'index']);
 Route::get('shelterTypes', [MixController::class, 'shelterTypeList']);
 Route::get('shelterOwnerships', [MixController::class, 'shelterOwnershipList']);
-Route::post('analytics',[AnalyticController::class, 'dashboard']);
+Route::get('analytics',[AnalyticController::class, 'dashboard']);
 Route::get('analytics2/{id}',[AnalyticController::class, 'dashboard2']);
 Route::get('analytics3/{id}',[AnalyticController::class, 'dashboard3']);
 Route::post('addmemskillevamarks/{id}',[HfMemberSkillEvaluationController::class, 'store']);
@@ -180,3 +186,12 @@ Route::get('filter-taluk-jamath', [HfStateController::class, 'filterjamaths']);
 
 Route::get('user-list/{id}', [HfUsersController::class, 'userList']);
 Route::post('denied-access-list/', [DeniedController::class, 'deniedAccess']);
+Route::get('denied-access-list-SA/{id}', [DeniedController::class, 'deniedAccessSA']);
+
+
+// api of module category
+Route::post('add-module', [ModuleController::class, 'store']);
+Route::delete('delete-modules/{id}', [ModuleController::class, 'destroy']);
+Route::get('edit-data-modules/{id}', [ModuleController::class, 'edit']);
+Route::put('update-module/{id}', [ModuleController::class, 'update']);
+Route::get('get-modules', [ModuleController::class, 'index']);

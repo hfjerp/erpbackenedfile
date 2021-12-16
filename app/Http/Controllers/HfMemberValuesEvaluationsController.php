@@ -50,33 +50,33 @@ class HfMemberValuesEvaluationsController extends Controller
                 'marks'=>$request->patience,
                 'val_id'=>$patience,
                 'family_member_id'=>$id,
-                'date'=>date("Y-m-d"),
+                'date'=>$request->month,
             ]); 
             $marks = HfMemberValuesEvaluations::create([
                 'marks'=>$request->simplicity,
                 'val_id'=>$simplicity,
                 'family_member_id'=>$id,
-                'date'=>date("Y-m-d"),
+                'date'=>$request->month,
             ]);
             
             $marks = HfMemberValuesEvaluations::create([
                 'marks'=>$request->discipline,
                 'val_id'=>$discipline,
                 'family_member_id'=>$id,
-                'date'=>date("Y-m-d"),
+                'date'=>$request->month,
             ]);
                 $marks = HfMemberValuesEvaluations::create([
                 'marks'=>$request->honesty,
                 'val_id'=>$honesty,
                 'family_member_id'=>$id,
-                'date'=>date("Y-m-d"),
+                'date'=>$request->month,
 
                 ]);
                 $marks = HfMemberValuesEvaluations::create([
                 'marks'=>$request->confidence,
                 'val_id'=>$confidence,
                 'family_member_id'=>$id,
-                'date'=>date("Y-m-d"),
+                'date'=>$request->month,
         
         
         

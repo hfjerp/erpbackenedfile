@@ -41,7 +41,7 @@ class HfAssessMarksController extends Controller
                 
                 'marks'=>$request->marks,
                 'family_member_id'=>$id,
-                'date'=>date("Y-m-d"),
+                'date'=>$request->month,
         
         
         

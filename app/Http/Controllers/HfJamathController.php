@@ -88,9 +88,16 @@ class HfJamathController extends Controller
      * @param  \App\Models\HfJamath  $hfJamath
      * @return \Illuminate\Http\Response
      */
-    public function destroy(HfJamath $hfJamath)
+    public function destroy($id)
     {
-        //
+        $res=HfJamath::where('id',$id)->delete();
+        return response()->json([$id]);
+    } 
+    
+    public function destroy2($id)
+    {
+    DB::table('hf_jamaths')->where('id', $id)->delete();
+    // return response()->json("uu");
     }
 
     public function jamaths($id)

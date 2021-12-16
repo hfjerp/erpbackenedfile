@@ -47,6 +47,19 @@ class HfContactController extends Controller
         
         return response()->json($address, 200);
     }
+    
+    public function show2($id)
+    {
+
+        $address= DB::table('hf_family_members')
+        ->join('hf_family_member_contacts','hf_family_member_contacts.family_member_id','hf_family_members.id')
+        ->join('hf_contacts','hf_contacts.id','hf_family_member_contacts.contact_id')
+       
+        ->where('hf_family_members.id','=',$id)
+        ->get();
+        
+        return response()->json($address, 200);
+    }
 
     /**
      * Update the specified resource in storage.

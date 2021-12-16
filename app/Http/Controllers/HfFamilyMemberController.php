@@ -471,6 +471,364 @@ class HfFamilyMemberController extends Controller
         return response()->json($hfFamilymem);
     }
 
+
+
+    public function updatememform(Request $request)
+    {
+
+        $familyMember=HfFamilyMember::where("id",$request['ID'])->first();
+        // $academyDetail=HfAcademicDetail::where("family_memeber_id",$request['ID'])->firstOrFail();
+        // $HfFamilyMemberAcademy=HfFamilyMemberAcademy::where("family_memeber_id",$request['ID'])->firstOrFail();
+        $HfOccupationDetail=HfOccupationDetail::where("family_member_id",$request['ID'])->firstOrFail();
+        $HfFamilyMemberAadhar=HfFamilyMemberAadhar::where("family_member_id",$request['ID'])->firstOrFail();
+        $HfFamilyMemberSeniorCitizen=HfFamilyMemberSeniorCitizen::where("family_member_id",$request['ID'])->firstOrFail();
+        $HfFamilyMemberLabour=HfFamilyMemberLabour::where("family_member_id",$request['ID'])->firstOrFail();
+        $HfFamilyMemberHealth=HfFamilyMemberHealth::where("family_member_id",$request['ID'])->firstOrFail();
+        $HfFamilyMemberBank=HfFamilyMemberBank::where("family_member_id",$request['ID'])->firstOrFail();
+        $HfFamilyMemberVoterId=HfFamilyMemberVoterId::where("family_member_id",$request['ID'])->firstOrFail();
+        $HfFamilyMemberHealthDetail=HfFamilyMemberHealthDetail::where("family_member_id",$request['ID'])->firstOrFail();
+        $HfFamilyMemberPrioritySupport=HfFamilyMemberPrioritySupport::where("family_member_id",$request['ID'])->firstOrFail();
+        $HfFamilyMemberOccupationSupport=HfFamilyMemberOccupationSupport::where("family_member_id",$request['ID'])->firstOrFail();
+        $HfFamilyMemberAcademySupport=HfFamilyMemberAcademySupport::where("family_member_id",$request['ID'])->firstOrFail();
+        $HfFamilyMemberHealthSupport=HfFamilyMemberHealthSupport::where("family_member_id",$request['ID'])->firstOrFail();
+        $HfFamilyMemberHobby=HfFamilyMemberHobby::where("family_member_id",$request['ID'])->firstOrFail();
+        $HfFamilyMemberGoal=HfFamilyMemberGoal::where("family_member_id",$request['ID'])->firstOrFail();
+        $HfFamilyMemberSkill=HfFamilyMemberSkill::where("family_member_id",$request['ID'])->firstOrFail();
+        $HfFamilyMemberOtherCourse=HfFamilyMemberOtherCourse::where("family_member_id",$request['ID'])->firstOrFail();
+        // $HfFamilyHead=HfFamilyHead::where("family_member_id",$request['ID'])->firstOrFail();
+        $academyDetail= DB::table('hf_family_members')
+        ->LeftJoin('hf_family_member_academies','hf_family_member_academies.family_member_id','hf_family_members.id')
+        ->LeftJoin('hf_academic_details','hf_academic_details.id','hf_family_member_academies.academy_detail_id')
+        ->where('hf_family_member_academies.type','=','Religious');
+        $academyDetail2= DB::table('hf_family_members')
+        ->LeftJoin('hf_family_member_academies','hf_family_member_academies.family_member_id','hf_family_members.id')
+        ->LeftJoin('hf_academic_details','hf_academic_details.id','hf_family_member_academies.academy_detail_id')
+        ->where('hf_family_member_academies.type','=','General');
+        $cont= DB::table('hf_family_members')
+        ->join('hf_family_member_contacts','hf_family_member_contacts.family_member_id','hf_family_members.id')
+        ->join('hf_contacts','hf_contacts.id','hf_family_member_contacts.contact_id');
+
+       
+        // ->select('hf_shelters.support_required as change','hf_families.*','hf_family_banks.*','hf_family_food.*','hf_shelters.*','hf_family_addresses.*','hf_addresses.*')
+        // ->select('hf_family_food.support_required as chhanged','hf_families.*','hf_family_banks.*','hf_family_food.*','hf_shelters.*','hf_family_addresses.*','hf_addresses.*');
+
+        // return $request;
+        $familyMember->update([
+            'name' => $request->name,
+            // 'family_id' => $request->family_id,
+            'blood_group' => $request->blood_group,
+            'dob' => $request->dob,
+            'gender' => $request->gender,
+            'marital_status' => $request->marital_status,
+            'occupation_type' => $request->occupation_type,
+            'relationship' => $request->relationship=="Other"?$request->extra_rel:$request->relationship,
+        ]);
+            // --------------------------------_____
+            $contact_list = [];
+
+        // $data = $request->contacts;
+        // return response($data);
+
+        $tempArray = json_decode($request->contacts, true);
+        foreach ((array)$tempArray as $contact) {
+            $contct = HfContact::create([
+                'contact_type' => $contact['type']['name'],
+                'value' => $contact['value'],
+            ]);
+            array_push($contact_list, $contct->id);
+        }
+
+            // return response($contact_list);
+
+
+        foreach ($contact_list as $contact) {
+            HfFamilyMemberContact::create([
+                'contact_id'=>$contact,
+                'family_member_id'=>$familyMember->id,
+            ]);
+        }
+        $contact_list = [];
+
+        // $data = $request->contacts;
+        // return response($data);
+
+        $demoArray = json_decode($request->update, true);
+        foreach ((array)$demoArray as $contact) {
+            $update=HfContact::where('id',$contact['id'])->update([
+                
+                'value' => $contact['value'],
+            ]);
+           
+        }
+        // // ---------------
+        // $contact_list = [];
+
+        // $tempArray = json_decode($request->contacts, true);
+        // foreach ((array)$tempArray as $contact) {
+        //     $contct = HfContact::create([
+        //         'contact_type' => $contact['type']['name'],
+        //         'value' => $contact['value'],
+        //     ]);
+        //     array_push($contact_list, $contct->id);
+        // }
+
+        // foreach ($contact_list as $contact) {
+        //     HfFamilyMemberContact::create([
+        //         'contact_id'=>$contact,
+        //         'family_member_id'=>$familyMember->id,
+        //     ]);
+        // }
+        // -------------
+        if($request->occupation_type == "Business Owner" || "Job"){
+            $HfOccupationDetail->update([
+                // 'family_member_id' => $familyMember->id,
+                'occupation' => $request->occupation_type,
+                'workplace_name' => $request->work_place_name,
+                'workplace_address' => $request->work_place_address,
+                'income' => $request->income,
+                'other' => $request->other,
+            ]);
+        }
+
+        if($request->gen_education_type) {
+            $academyDetail2->update([
+                'academic_year' => $request->academic_year,
+                'major' => $request->major,
+                'class' => $request->academy_class,
+                'academy_name' => $request->academy_name,
+                'academic_medium' => $request->medium,
+            ]);
+
+            $academyDetail2->update([
+                // "family_member_id" => $familyMember->id,
+                // "academy_detail_id" => $academyDetail->id,
+                // "current_academy" => $academyDetail->id,
+                'status' => $request->gen_status,
+                'type' => $request->gen_education_type,
+
+
+            ]);
+    
+        }
+
+        if($request->rel_education_type) {
+            $academyDetail->update([
+                'academic_year' => $request->rel_academic_year,
+                'major' => $request->rel_major,
+                'class' => $request->rel_academy_class,
+                'academy_name' => $request->rel_academy_name,
+                'academic_medium' => $request->rel_medium,
+            ]);
+
+            $academyDetail->update([
+                // "family_member_id" => $familyMember->id,
+                // "academy_detail_id" => $academyDetail->id,
+                'status' => $request->gen_status,
+                'type' => $request->rel_education_type,
+
+                // "current_academy" => $academyDetail->id,
+            ]);
+
+            
+        }
+
+        $profileImgPath = null;
+        if($request->file('profile_img_url')){
+            $profileImgPath = $request->file('profile_img_url')->move('familyMember/'.$familyMember->id.'/profileImg/');
+            $familyMember->update([
+                'profile_img_url' => $profileImgPath,
+            ]);
+        }
+        // // ---------Aadhar ---------------------
+        $aadharCardImgPath = null;
+
+        if($request->file('aadhar_card_img_url')){
+            $aadharCardImgPath = $request->file('aadhar_card_img_url')->move('familyMember/' . $familyMember->id . '/aadharCardImg/');
+            $HfFamilyMemberAadhar->update([
+                'aadhar_card_img_url' =>$aadharCardImgPath,
+
+            ]);
+        }
+
+        $HfFamilyMemberAadhar->update([
+            'aadhar_card_no'=> $request->aadhar_card_no,
+            // 'aadhar_card_img_url'=> $aadharCardImgPath,
+            'family_member_id' => $familyMember->id
+        ]);
+
+        // ---------- Voter Id ---------------
+        $voterIdCardImgPath = null;
+
+        if ($request->file('voter_id_card_img_url')) {
+            $voterIdCardImgPath = $request->file('voter_id_card_img_url')->move('familyMember/' . $familyMember->id . '/voterIdCardImg/');
+            $HfFamilyMemberVoterId->update([
+                'voter_id_card_img_url' =>$voterIdCardImgPath,
+
+            ]);
+        }
+
+        $HfFamilyMemberVoterId->update([
+            'voter_id_card_no' => $request->voter_id_no,
+            // 'voter_id_card_img_url' => $voterIdCardImgPath,
+            'family_member_id' => $familyMember->id
+        ]);
+
+        // // ---------- Bank Detail ---------------
+        $passbookPath = null;
+        if ($request->file('passbook_url')) {
+            $passbookPath = $request->file('passbook_url')->move('familyMember/' . $familyMember->id . '/passbook/');
+            $HfFamilyMemberBank->update([
+                'passbook_url' =>$passbookPath,
+
+            ]);
+        }
+
+        $HfFamilyMemberBank->update([
+            'account_no' => $request->account_number,
+            // 'passbook_url' => $passbookPath,
+            'family_member_id' => $familyMember->id
+        ]);
+
+        // // ---------- Health Card ---------------
+        $healthImgPath = null;
+        if ($request->file('health_card_img_url')) {
+            $healthImgPath = $request->file('health_card_img_url')->move('familyMember/' . $familyMember->id . '/healthCardImg/');
+            $HfFamilyMemberHealth->update([
+                'health_card_img_url' =>$healthImgPath,
+
+            ]);
+        }
+
+        $HfFamilyMemberHealth->update([
+            'health_card_no' => $request->health_card_no,
+            // 'health_card_img_url' => $healthImgPath,
+            'family_member_id' => $familyMember->id
+        ]);
+
+        // // ---------- Labour Card ---------------
+        $labourImgPath = null;
+        if ($request->file('labour_card_img_url')) {
+            $labourImgPath = $request->file('labour_card_img_url')->move('familyMember/' . $familyMember->id . '/labourCardImg/');
+            $HfFamilyMemberLabour->update([
+                'labour_card_img_url' =>$labourImgPath,
+
+            ]);
+        }
+
+        $HfFamilyMemberLabour->update([
+            'labour_card_no' => $request->labour_card_no,
+            // 'labour_card_img_url' => $labourImgPath,
+            'family_member_id' => $familyMember->id
+        ]);
+
+        // // ---------- Senior Card ---------------
+        $sCitizenImgPath = null;
+        if ($request->file('senior_citizen_card_img_url')) {
+            $sCitizenImgPath = $request->file('senior_citizen_card_img_url')->move('familyMember/' . $familyMember->id . '/sCitizenCardImg/');
+            $HfFamilyMemberSeniorCitizen->update([
+                'senior_citizen_card_img_url' =>$sCitizenImgPath,
+
+            ]);
+        }
+
+        $HfFamilyMemberSeniorCitizen->update([
+            'senior_citizen_card_no' => $request->senior_citizen_card_no,
+            // 'senior_citizen_card_img_url' => $sCitizenImgPath,
+            'family_member_id' => $familyMember->id
+        ]);
+
+        // // saving the family member health details
+        $HfFamilyMemberHealthDetail->update([
+            'family_member_id' => $familyMember->id,
+            'disease' => $request->disease,
+            'since' => $request->since,
+            'description' => $request->health_status,
+            'place' => $request->hospital_place,
+            'hospital' => $request->hospital,
+            'exercise' => $request->exercise,
+        ]);
+
+        if ($request->isHead == "true") {
+            HfFamilyHead::create([
+                'family_member_id' => $familyMember->id,
+                'family_id' => $request->family_id,
+            ]);
+        }
+        else{
+
+            HfFamilyHead::where('family_member_id', $familyMember->id) ->delete([
+               
+            ]);
+        }
+
+        $HfFamilyMemberOtherCourse->update([
+            'family_member_id' => $familyMember->id,
+            'course' => $request->course,
+        ]);
+
+        $HfFamilyMemberHobby->update([
+            'family_member_id' => $familyMember->id,
+            'hobby' => $request->mem_hobby,
+        ]);
+
+        $HfFamilyMemberGoal->update([
+            'family_member_id' => $familyMember->id,
+            'goal' => $request->mem_goal,
+        ]);
+
+        $HfFamilyMemberSkill->update([
+            'family_member_id' => $familyMember->id,
+            'skill' => $request->mem_skill,
+        ]);
+
+
+        // // All support required for each family member are saved from here onwards
+
+        $HfFamilyMemberPrioritySupport->update([
+            'family_member_id' => $familyMember->id,
+            'priority_support' => $request->priority_support,
+        ]);
+
+        $HfFamilyMemberOccupationSupport->update([
+            'family_member_id' => $familyMember->id,
+            'support_source' => $request->sr_support_source,
+            'support_received' => $request->sr_support_received,
+            'support_required' => $request->sr_support_required,
+            'support_req_status' => $request->ooooo,
+        ]);
+
+        $HfFamilyMemberAcademySupport->update([
+            'family_member_id' => $familyMember->id,
+            'support_source' => $request->edu_support_source,
+            'support_received' => $request->edu_support_received,
+            'support_required' => $request->edu_support_required,
+            'support_req_status' => $request->kkkk,
+        ]);
+
+        $HfFamilyMemberHealthSupport->update([
+            'family_member_id' => $familyMember->id,
+            'support_source' => $request->hlth_support_source,
+            'support_received' => $request->hlth_support_received,
+            'support_required' => $request->hlth_support_required,
+            'support_req_status' => $request->hsrd,
+        ]);
+        
+
+
+
+
+
+
+        return response()->json([
+            
+            
+            'familyMember' =>$familyMember,
+            'id' =>$request['gen_education_type'],
+        
+        ]);
+    }
+
+
     /**
      * Update the specified resource in storage.
      *
