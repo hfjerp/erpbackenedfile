@@ -95,17 +95,31 @@ class HfEduAssessController extends Controller
      * @param  \App\Models\HfMemberEduAssess  $HfMemberEduAssess
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update2(Request $request,$id)
     {
-        // $marks->update($request->all());
-        // alert("reeeeee");
-        // $marks=HfMemberEduAssess::find($id);
-        // $marks->update([
-        //     'name'=> $request->name,
-        // ]);
-        // // $marks -> name=$request->input('name');
-        // // $marks->update();
-        // return response()->json($request);
+        $marks = DB::table('hf_member_edu_assesses')
+        ->where('edu_id',$id)
+        ->update(array(
+
+
+            'percentage'=>$request->marks,
+            'course'=>$request->course,
+            'year'=>$request->year,
+
+        ));
+        
+          
+            
+            
+    
+    
+    
+    
+
+        return response()->json($marks);
+
+
+
     }
 
 

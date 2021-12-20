@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DeniedController;
+use App\Http\Controllers\HfMemberSubjectEvaluationController;
 use App\Http\Controllers\HfRolesController;
 use App\Http\Controllers\HfMemberSkillEvaluationController;
 use App\Http\Controllers\HfMemberValuesEvaluationsController;
@@ -82,6 +83,7 @@ Route::group([
 Route::apiResource('hfRoles', HfRolesController::class );
 Route::put('hfmarksss/{id}', [HfAssessMarksController::class,'store'] );
 Route::put('hfedumarksss/{id}', [HfEduAssessController::class,'store'] );
+Route::put('hfedumarkss/{id}', [HfEduAssessController::class,'update2'] );
 Route::put('hfvalues/{id}', [HfMemberValuesEvaluationsController::class,'store'] );
 Route::put('hfSkills/{id}', [HfMemberSkillEvaluationController::class,'store'] );
 Route::get('AssessLineGraph/{id}', [HfAssessMarksController::class,'AssessLineGraph'] );
@@ -187,6 +189,7 @@ Route::get('filter-taluk-jamath', [HfStateController::class, 'filterjamaths']);
 Route::get('user-list/{id}', [HfUsersController::class, 'userList']);
 Route::post('denied-access-list/', [DeniedController::class, 'deniedAccess']);
 Route::get('denied-access-list-SA/{id}', [DeniedController::class, 'deniedAccessSA']);
+Route::post('hfsubjectmarks/{id}', [HfMemberSubjectEvaluationController::class, 'store']);
 
 
 // api of module category
