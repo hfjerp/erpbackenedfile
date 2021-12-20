@@ -95,6 +95,7 @@ class HfEduAssessController extends Controller
      * @param  \App\Models\HfMemberEduAssess  $HfMemberEduAssess
      * @return \Illuminate\Http\Response
      */
+    // ssssssssss
     public function update2(Request $request,$id)
     {
         $marks = DB::table('hf_member_edu_assesses')
