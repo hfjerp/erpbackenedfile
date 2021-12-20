@@ -192,7 +192,7 @@ Route::get('denied-access-list-SA/{id}', [DeniedController::class, 'deniedAccess
 Route::post('hfsubjectmarks/{id}', [HfMemberSubjectEvaluationController::class, 'store']);
 
 
-// api of module category
+// api of module category//
 Route::post('add-module', [ModuleController::class, 'store']);
 Route::delete('delete-modules/{id}', [ModuleController::class, 'destroy']);
 Route::get('edit-data-modules/{id}', [ModuleController::class, 'edit']);
