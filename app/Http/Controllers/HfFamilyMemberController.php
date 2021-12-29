@@ -499,11 +499,13 @@ class HfFamilyMemberController extends Controller
         $academyDetail= DB::table('hf_family_members')
         ->LeftJoin('hf_family_member_academies','hf_family_member_academies.family_member_id','hf_family_members.id')
         ->LeftJoin('hf_academic_details','hf_academic_details.id','hf_family_member_academies.academy_detail_id')
-        ->where('hf_family_member_academies.type','=','Religious');
+        ->where('hf_family_member_academies.type','=','Religious')
+        ->where('hf_family_members.id','=',$request['ID']);
         $academyDetail2= DB::table('hf_family_members')
         ->LeftJoin('hf_family_member_academies','hf_family_member_academies.family_member_id','hf_family_members.id')
         ->LeftJoin('hf_academic_details','hf_academic_details.id','hf_family_member_academies.academy_detail_id')
-        ->where('hf_family_member_academies.type','=','General');
+        ->where('hf_family_member_academies.type','=','General')
+        ->where('hf_family_members.id','=',$request['ID']);
         $cont= DB::table('hf_family_members')
         ->join('hf_family_member_contacts','hf_family_member_contacts.family_member_id','hf_family_members.id')
         ->join('hf_contacts','hf_contacts.id','hf_family_member_contacts.contact_id');

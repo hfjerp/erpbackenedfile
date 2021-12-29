@@ -81,12 +81,14 @@ Route::group([
 
 // resource api's
 Route::apiResource('hfRoles', HfRolesController::class );
-Route::put('hfmarksss/{id}', [HfAssessMarksController::class,'store'] );
+Route::post('hfmarksss/{id}', [HfAssessMarksController::class,'store'] );
 Route::put('hfedumarksss/{id}', [HfEduAssessController::class,'store'] );
 Route::put('hfedumarkss/{id}', [HfEduAssessController::class,'update2'] );
 Route::put('hfvalues/{id}', [HfMemberValuesEvaluationsController::class,'store'] );
 Route::put('hfSkills/{id}', [HfMemberSkillEvaluationController::class,'store'] );
 Route::get('AssessLineGraph/{id}', [HfAssessMarksController::class,'AssessLineGraph'] );
+Route::get('AicuLineChart/{id}', [HfAssessMarksController::class,'AicuLineChart'] );
+Route::get('AicuCurveChart/{id}', [HfAssessMarksController::class,'AicuCurveChart'] );
 Route::get('EduAssessLineGraph/{id}', [HfEduAssessController::class,'EduAssessLineGraph'] );
 Route::apiResource('hfUsers', HfUsersController::class );
 Route::apiResource('hfJamaths', HfJamathController::class );
@@ -129,7 +131,7 @@ Route::GET('SADashMemhealthlist', [HfFamilyMemberController::class,'SADashMemhea
 Route::GET('SADashMemocclist', [HfFamilyMemberController::class,'SADashMemocclist']);
 Route::GET('SADashMemacalist', [HfFamilyMemberController::class,'SADashMemacalist']);
 Route::GET('family-membersedit/{id}',[HfFamilyMemberController::class,'edit']);
-Route::POST('updatememform',[HfFamilyMemberController::class,'updatememform']);
+Route::post('updatememform',[HfFamilyMemberController::class,'updatememform']);
 Route::apiResource('family-members2', HfFamilyMemberController2::class);
 Route::GET('family-members22/{id}', [HfFamilyMemberController2::class,'show']);
 Route::GET('family-members222/{id}', [HfFamilyMemberController2::class,'show2']);
