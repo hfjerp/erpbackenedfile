@@ -62,6 +62,7 @@ class HfFamilyReportController extends Controller
         if ($allFamilyMembers) {
             $allFamilyMembers->map(function ($familyMember) {
                 $familyMember->occupation_type == "Business Owner" && ($familyMember->occupationDetail);
+                $familyMember->occupation_type == "Job" && ($familyMember->occupationDetail);
                 $familyMember->occupation_type == "Student" && $familyMember->familyMemberAcademy->map(function ($memberAcademy) {
                     return $memberAcademy->academicDetail;
                 });

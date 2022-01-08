@@ -113,10 +113,10 @@ class HfMemberValuesEvaluationsController extends Controller
     //     return response()->json($marks, 200);
     }
     
-    public function ValueAssessLineGraph($id)
+    public function ValueAssessLineGraph($id,$year)
     {
 
-        $y = date('Y');
+        $y = $year;
 
         $arr = [
             'dummy' => '100',
@@ -169,10 +169,10 @@ class HfMemberValuesEvaluationsController extends Controller
 
         return response()->json($l);
     }
-    public function PatienceAssesspie($id)
+    public function PatienceAssesspie($id,$year)
     {
 
-        $y = date('Y');
+        $y = $year;
 
         $arr = [
             // 'dummy' => '100',
@@ -231,10 +231,10 @@ class HfMemberValuesEvaluationsController extends Controller
 
 
 
-    public function SimplicityAssesspie($id)
+    public function SimplicityAssesspie($id,$year)
     {
 
-        $y = date('Y');
+        $y = $year;
 
         $arr = [
             // 'dummy' => '100',
@@ -290,10 +290,10 @@ class HfMemberValuesEvaluationsController extends Controller
 
         return response()->json($l);
     }
-    public function DisciplineAssesspie($id)
+    public function DisciplineAssesspie($id,$year)
     {
 
-        $y = date('Y');
+        $y = $year;
 
         $arr = [
             // 'dummy' => '100',
@@ -351,10 +351,10 @@ class HfMemberValuesEvaluationsController extends Controller
     }
 
 
-    public function HonestyAssesspie($id)
+    public function HonestyAssesspie($id,$year)
     {
 
-        $y = date('Y');
+        $y = $year;
 
         $arr = [
             // 'dummy' => '100',
@@ -411,10 +411,10 @@ class HfMemberValuesEvaluationsController extends Controller
         return response()->json($l);
     }
 
-    public function ConfidenceAssesspie($id)
+    public function ConfidenceAssesspie($id,$year)
     {
 
-        $y = date('Y');
+        $y = $year;
 
         $arr = [
             // 'dummy' => '100',

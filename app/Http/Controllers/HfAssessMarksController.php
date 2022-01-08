@@ -195,10 +195,10 @@ class HfAssessMarksController extends Controller
 
         return response()->json($l);
     }
-    public function AicuLineChart($id)
+    public function AicuLineChart($id,$year)
     {
-
-        $y = date('Y');
+        
+        $y = $year;
 
         $arr = [
             'dummy' => '100',
@@ -227,16 +227,16 @@ class HfAssessMarksController extends Controller
         
 
         foreach ($testarr as $key => $value) {
-            $data[$value]  = $this -> getMarks($value,$id);
+            $data[$value]  = $this -> getMarks($value,$id,$year);
         }
 
         return $data;
 
     }
 
-    public function getMarks($test,$id){
+    public function getMarks($test,$id,$year){
 
-        $y = date('Y');
+        $y = $year;
 
         $arr = [
             'dummy' => '100',
@@ -357,6 +357,102 @@ class HfAssessMarksController extends Controller
             
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+    public function AicuTableChart($id,$year)
+    {
+
+        $y = $year;
+
+        $arr = [
+            'dummy' => '100',
+            'Jan' => '01',
+            'Feb' => '02',
+            'Mar' => '03',
+            'Apr' => '04',
+            'May' => '05',
+            'Jun' => '06',
+            'Jul' => '07',
+            'Aug' => '08',
+            'Sep' => '09',
+            'Oct' => '10',
+            'Nov' => '11',
+            'Dec' => '12',
+        ];
+        foreach ($arr as $key => $value) {
+            $arr2[] = $y."-".$value; 
+            $m[] = $key;
+       
+        }
+
+
+
+        $testarr = ['test1','test2','test3','test4'];
+        
+
+        foreach ($testarr as $key => $value) {
+            $data[$value]  = $this -> getMarks2($value,$id,$year);
+        }
+
+        return $data;
+
+    }
+
+    public function getMarks2($test,$id,$year){
+
+        $y = $year;
+
+        $arr = [
+            'dummy' => '100',
+            'Jan' => '01',
+            'Feb' => '02',
+            'Mar' => '03',
+            'Apr' => '04',
+            'May' => '05',
+            'Jun' => '06',
+            'Jul' => '07',
+            'Aug' => '08',
+            'Sep' => '09',
+            'Oct' => '10',
+            'Nov' => '11',
+            'Dec' => '12',
+        ];
+        foreach ($arr as $key => $value) {
+            $arr2[] = $y."-".$value; 
+            $m[] = $key;
+       
+        }
+
+        for($i = 0;$i < count($arr2); $i++ ){
+        $mark = DB::table('hf_member_evaluations')
+            ->where('hf_member_evaluations.family_member_id','=',$id)
+            ->where('hf_member_evaluations.type','=',$test)
+            ->where('date', 'like',$year.'%')
+            ->join('hf_aicu_subjects','hf_aicu_subjects.name','hf_member_evaluations.asub_id')
+            ->select('hf_member_evaluations.asub_id as bsub_id','hf_aicu_subjects.*','hf_member_evaluations.*')
+            ->orderby('hf_aicu_subjects.asub_id','asc')
+           
+            ->get(['marks','asub_id','type','date']);
+
+            // $lm = $line = [
+            //                 // 'month' =>  $m[$i],
+            //                 'mark' => $mark,
+            //             ];
+            }
+            return $mark;
+            
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -377,7 +473,14 @@ class HfAssessMarksController extends Controller
         // return response()->json($request);
     }
 
-
+    public function getAllAicuMarks(Request $request,$id)
+    {
+        $allmarks = HfMemberEvaluation::where('family_member_id', $id)->get();
+        if($allmarks){
+            return response()->json($allmarks);
+        }
+        return response()->json(['msg'=>"There is no data"],500);
+    }
     /**
      * Remove the specified resource from storage.
      

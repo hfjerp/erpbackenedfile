@@ -112,10 +112,10 @@ class HfMemberSkillEvaluationController extends Controller
     //     return response()->json($marks, 200);
     }
     
-    public function SkillAssessLineGraph($id)
+    public function SkillAssessLineGraph($id,$year)
     {
 
-        $y = date('Y');
+        $y = $year;
 
         $arr = [
             'dummy' => '100',
@@ -168,10 +168,10 @@ class HfMemberSkillEvaluationController extends Controller
 
         return response()->json($l);
     }
-    public function ComSkillAssesspie($id)
+    public function ComSkillAssesspie($id,$year)
     {
 
-        $y = date('Y');
+        $y = $year;
 
         $arr = [
             // 'dummy' => '100',
@@ -230,10 +230,10 @@ class HfMemberSkillEvaluationController extends Controller
 
 
 
-    public function TeamSkillAssesspie($id)
+    public function TeamSkillAssesspie($id,$year)
     {
 
-        $y = date('Y');
+        $y = $year;
 
         $arr = [
             // 'dummy' => '100',
@@ -289,10 +289,10 @@ class HfMemberSkillEvaluationController extends Controller
 
         return response()->json($l);
     }
-    public function IniSkillAssesspie($id)
+    public function IniSkillAssesspie($id,$year)
     {
 
-        $y = date('Y');
+        $y = $year;
 
         $arr = [
             // 'dummy' => '100',
@@ -350,10 +350,10 @@ class HfMemberSkillEvaluationController extends Controller
     }
 
 
-    public function LeaSkillAssesspie($id)
+    public function LeaSkillAssesspie($id,$year)
     {
 
-        $y = date('Y');
+        $y = $year;
 
         $arr = [
             // 'dummy' => '100',
@@ -410,10 +410,10 @@ class HfMemberSkillEvaluationController extends Controller
         return response()->json($l);
     }
 
-    public function PlanSkillAssesspie($id)
+    public function PlanSkillAssesspie($id,$year)
     {
 
-        $y = date('Y');
+        $y = $year;
 
         $arr = [
             // 'dummy' => '100',

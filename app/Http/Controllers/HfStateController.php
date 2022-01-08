@@ -82,6 +82,18 @@ class HfStateController extends Controller
         }
         return response()->json(['msg' => "There is no entry of district for this state"], 500);
     }
+
+    public function districtsall()
+    {
+        $allDistricts = HfDistrict::all();
+        if ($allDistricts) {
+            return response()->json($allDistricts);
+        }
+        return response()->json(['msg' => "There is no entry of district for this state"], 500);
+    }
+
+
+
     public function filterjamaths()
     {
         $allJamathss = HfJamath::all();

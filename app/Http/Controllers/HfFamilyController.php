@@ -18,10 +18,10 @@ use DB;
 class HfFamilyController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('auth:api');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:api');
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -86,8 +86,14 @@ class HfFamilyController extends Controller
      */
     public function store(Request $request)
     {
-        // $request = (object) $request->json()->all();
-        // return response($request, 201);
+        $raexist = HfFamily::where('ration_card_no',$request->ration_card_no)->get();
+
+        if(count($raexist) > 0){
+            return response()->json([
+                'res' => $raexist,
+                'status' => 205
+            ]);
+        }else{
         $address = HfAddress::create([
             'address' => $request->address,
             'street' => $request->street,
@@ -180,7 +186,219 @@ class HfFamilyController extends Controller
 
         return response()->json($family, 200);
     }
+    }
+    public function mrstore(Request $request)
+    {
+        $raexist = HfFamily::where('ration_card_no',$request->ration_card_no)->get();
 
+        if(count($raexist) > 0){
+            return response()->json([
+                'res' => $raexist,
+                'status' => 205
+            ]);
+        }else{
+        $address = HfAddress::create([
+            'address' => $request->address,
+            'street' => $request->street,
+            'city' => $request->city,
+            'state' => $request->state,
+            'country' => $request->country,
+            'pincode' => $request->pincode,
+        ]);
+
+        $family = HfFamily::create([
+            'family_code' => $this->getFamilyCode(),
+            'door_no'=>$request->door,
+            'religion'=>$request->religion,
+            'ration_card_type'=>$request->ration_card_type,
+            'ration_card_no'=>$request->ration_card_no,
+            'income'=>$request->income,
+            'income_source'=>$request->income_source,
+            'user_id'=>"mradmin",
+            'jamath_id'=>$request->jamath_id,
+
+            'language'=>$request->language
+        ]);
+
+        $familyAddress = HfFamilyAddress::create([
+            'address_id' => $address->id,
+            'family_id' => $family->id,
+        ]);
+
+        HfShelter::create([
+            'ownership' => $request->shelter_ownership,
+            'type' => $request->shelter_type,
+            'support_required' => $request->shelter_support_required,
+            'family_id' => $family->id,
+        ]);
+
+        HfFamilyBank::create([
+            'account_no' => $request->account_no,
+            'bank_name' => $request->bank_name,
+            'bank_branch' => $request->bank_branch,
+            'ifsc_code' => $request->ifsc_code,
+            'family_id' => $family->id,
+        ]);
+
+        HfFamilyFood::create([
+            'family_id' => $family->id,
+            'source' => $request->food_source,
+            'support_required' => $request->food_support_required,
+            'support_req_status' => $request->hsrdd,
+        ]);
+
+        $contact_list = [];
+
+        // $data = $request->contacts;
+        // return response($data);
+
+        $tempArray = json_decode($request->contacts, true);
+        foreach ((array)$tempArray as $contact) {
+            $contct = HfContact::create([
+                'contact_type' => $contact['type']['name'],
+                'value' => $contact['value'],
+            ]);
+            array_push($contact_list, $contct->id);
+        }
+
+            // return response($contact_list);
+
+
+        foreach ($contact_list as $contact) {
+            HfFamilyContact::create([
+                'contact_id'=>$contact,
+                'family_id'=>$family->id,
+            ]);
+        }
+
+
+
+
+
+        
+
+        $path=null;
+        if($request->hasFile('ration_img_url')){
+            $path = $request->file('ration_img_url')->move('families/rationCardImg/'.$family->id);
+        }
+
+        $family->update([
+            'family_address_id' => $familyAddress->id,
+            'ration_img_url' => $path,
+        ]);
+
+        return response()->json($family, 200);
+    }
+    }
+
+    public function gcstore(Request $request)
+    {
+
+        $raexist = HfFamily::where('ration_card_no',$request->ration_card_no)->get();
+
+        if(count($raexist) > 0){
+            return response()->json([
+                'res' => $raexist,
+                'status' => 205
+            ]);
+        }else{
+
+            $address = HfAddress::create([
+                'address' => $request->address,
+                'street' => $request->street,
+                'city' => $request->city,
+                'state' => $request->state,
+                'country' => $request->country,
+                'pincode' => $request->pincode,
+            ]);
+    
+            $family = HfFamily::create([
+                'family_code' => $this->getFamilyCode(),
+                'door_no'=>$request->door,
+                'religion'=>$request->religion,
+                'ration_card_type'=>$request->ration_card_type,
+                'ration_card_no'=>$request->ration_card_no,
+                'income'=>$request->income,
+                'income_source'=>$request->income_source,
+                'user_id'=>"gcadmin",
+                'jamath_id'=>$request->jamath_id,
+    
+                'language'=>$request->language
+            ]);
+    
+            $familyAddress = HfFamilyAddress::create([
+                'address_id' => $address->id,
+                'family_id' => $family->id,
+            ]);
+    
+            HfShelter::create([
+                'ownership' => $request->shelter_ownership,
+                'type' => $request->shelter_type,
+                'support_required' => $request->shelter_support_required,
+                'family_id' => $family->id,
+            ]);
+    
+            HfFamilyBank::create([
+                'account_no' => $request->account_no,
+                'bank_name' => $request->bank_name,
+                'bank_branch' => $request->bank_branch,
+                'ifsc_code' => $request->ifsc_code,
+                'family_id' => $family->id,
+            ]);
+    
+            HfFamilyFood::create([
+                'family_id' => $family->id,
+                'source' => $request->food_source,
+                'support_required' => $request->food_support_required,
+                'support_req_status' => $request->hsrdd,
+            ]);
+    
+            $contact_list = [];
+    
+            // $data = $request->contacts;
+            // return response($data);
+    
+            $tempArray = json_decode($request->contacts, true);
+            foreach ((array)$tempArray as $contact) {
+                $contct = HfContact::create([
+                    'contact_type' => $contact['type']['name'],
+                    'value' => $contact['value'],
+                ]);
+                array_push($contact_list, $contct->id);
+            }
+    
+                // return response($contact_list);
+    
+    
+            foreach ($contact_list as $contact) {
+                HfFamilyContact::create([
+                    'contact_id'=>$contact,
+                    'family_id'=>$family->id,
+                ]);
+            }
+    
+    
+    
+    
+    
+            
+    
+            $path=null;
+            if($request->hasFile('ration_img_url')){
+                $path = $request->file('ration_img_url')->move('families/rationCardImg/'.$family->id);
+            }
+    
+            $family->update([
+                'family_address_id' => $familyAddress->id,
+                'ration_img_url' => $path,
+            ]);
+    
+            return response()->json($family, 200);
+
+        }
+
+       
+    }
     /**
      * Display the specified resource.
      *

@@ -48,7 +48,18 @@ class HfFamilyMemberController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request;
+        $adhexist = HfFamilyMemberAadhar::where('aadhar_card_no',$request->aadhar_card_no)->get();
+    
+        
+
+        if(count($adhexist) > 0){
+            $res=HfFamilyMember::where('id',$adhexist->family_member_id)->get();
+            return response()->json([
+                'res' => $adhexist,
+                'res1'  => $res,
+                'status' => 205
+            ]);
+        }else{
         $familyMember = HfFamilyMember::create([
             'name' => $request->name,
             'family_id' => $request->family_id,
@@ -96,6 +107,7 @@ class HfFamilyMemberController extends Controller
                 'major' => $request->major,
                 'class' => $request->academy_class,
                 'academy_name' => $request->academy_name,
+                'scourse' => $request->subject,
                 'academic_medium' => $request->medium,
             ]);
 
@@ -286,6 +298,7 @@ class HfFamilyMemberController extends Controller
 
         return response()->json($request);
     }
+    }
 
     /**
      * Display the specified resource.
@@ -342,6 +355,38 @@ class HfFamilyMemberController extends Controller
         ->get();
         return response()->json($exe);
     }
+
+    public function DashMemListMR($id)
+
+    {
+ 
+        
+        $exe=DB:: table('hf_family_members')
+
+        ->join('hf_families','hf_families.id','hf_family_members.family_id')
+        ->select('hf_family_members.id as memid','hf_families.*','hf_family_members.*')
+
+        ->where('hf_families.user_id','=','mradmin')
+        ->get();
+        return response()->json($exe);
+    }
+
+
+    public function DashMemListGC($id)
+
+    {
+ 
+        
+        $exe=DB:: table('hf_family_members')
+
+        ->join('hf_families','hf_families.id','hf_family_members.family_id')
+        ->select('hf_family_members.id as memid','hf_families.*','hf_family_members.*')
+
+        ->where('hf_families.user_id','=','gcadmin')
+        ->get();
+        return response()->json($exe);
+    }
+
 
     public function SADashMemList()
 
