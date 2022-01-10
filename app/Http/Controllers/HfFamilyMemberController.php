@@ -643,6 +643,7 @@ class HfFamilyMemberController extends Controller
                 'major' => $request->major,
                 'class' => $request->academy_class,
                 'academy_name' => $request->academy_name,
+                'scourse' => $request->subject,
                 'academic_medium' => $request->medium,
             ]);
 

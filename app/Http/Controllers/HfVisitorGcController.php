@@ -35,6 +35,7 @@ class HfVisitorGcController extends Controller
             'type'=>$request->occupation,
             'course'=>$request->course,
             'c_name'=>$request->iname,
+            'date' => now(),
 
         
         

@@ -40,6 +40,7 @@ class HfEduAssessController extends Controller
             $marks = HfMemberEduAssess::create([
                 
                 'percentage'=>$request->marks,
+                'board' => $request->board,
                 'course'=>$request->course,
                 'year'=>$request->year,
                 'family_member_id'=>$id,
