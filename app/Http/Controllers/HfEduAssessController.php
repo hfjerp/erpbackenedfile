@@ -72,7 +72,7 @@ class HfEduAssessController extends Controller
 
     //     return response()->json($marks, 200);
     }
-    
+    // shhuuw77y7hhhhs
     public function EduAssessLineGraph($id)
     {
 

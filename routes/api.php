@@ -139,7 +139,7 @@ Route::get('hfmemberlabour/{id}', [HfFamilyMemberLabourController::class,'show2'
 Route::apiResource('hfselfsupport', HfFamilyMemberOccupationSupportController::class);
 Route::apiResource('hfpriorsupport', HfFamilyMemberPrioritySupportController::class);
 Route::apiResource('hfhealsupport', HfFamilyMemberHealthSupportController::class);
-
+// shshhshhshhhshshshh
 Route::apiResource('family-members', HfFamilyMemberController::class);
 Route::GET('DashMemList/{id}', [HfFamilyMemberController::class,'DashMemList']);
 Route::GET('DashMemListMR/{id}', [HfFamilyMemberController::class,'DashMemListMR']);
