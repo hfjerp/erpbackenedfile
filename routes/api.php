@@ -94,6 +94,7 @@ Route::get('AicuCurveChart/{id}', [HfAssessMarksController::class,'AicuCurveChar
 Route::get('AicuTableChart/{id}/{year}', [HfAssessMarksController::class,'AicuTableChart'] );
 Route::get('getAllAicuMarks/{id}', [HfAssessMarksController::class,'getAllAicuMarks'] );
 Route::get('EduAssessLineGraph/{id}', [HfEduAssessController::class,'EduAssessLineGraph'] );
+Route::get('EduAssessLineGraph2/{id}', [HfEduAssessController::class,'EduAssessLineGraph2'] );
 Route::apiResource('hfUsers', HfUsersController::class );
 Route::apiResource('hfJamaths', HfJamathController::class );
 Route::delete('hfJamathsdelete/{id}', [HfJamathController::class,'destroy2'] );
@@ -183,6 +184,7 @@ Route::get('analytics',[AnalyticController::class, 'dashboard']);
 Route::get('analytics2/{id}',[AnalyticController::class, 'dashboard2']);
 Route::get('analytics41',[AnalyticController::class, 'dashboard41']);
 Route::get('analytics51',[AnalyticController::class, 'dashboard51']);
+Route::get('analytics61',[AnalyticController::class, 'dashboard61']);
 Route::get('analytics3/{id}',[AnalyticController::class, 'dashboard3']);
 Route::post('addmemskillevamarks/{id}',[HfMemberSkillEvaluationController::class, 'store']);
 Route::post('addmemvaluesevamarks/{id}',[HfMemberValuesEvaluationsController::class, 'store']);

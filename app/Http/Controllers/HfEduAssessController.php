@@ -41,7 +41,9 @@ class HfEduAssessController extends Controller
                 
                 'percentage'=>$request->marks,
                 'board' => $request->board,
+                'college' => $request->college,
                 'course'=>$request->course,
+                'csem'=>$request->csem,
                 'year'=>$request->year,
                 'family_member_id'=>$id,
                 
@@ -88,7 +90,25 @@ class HfEduAssessController extends Controller
 
         return response()->json($Eduline);
     }
+    public function EduAssessLineGraph2($id)
+    {
 
+        $Eduline = DB::table('hf_member_edu_assesses')
+    
+        ->select('hf_member_edu_assesses.year as title','hf_member_edu_assesses.board as cardTitle','hf_member_edu_assesses.course as cardSubtitle','hf_member_edu_assesses.percentage as cardDetailedText')
+        ->where('hf_member_edu_assesses.family_member_id','=',$id)
+        ->orderby('year','ASC')
+        ->get();
+
+
+
+
+        
+
+
+
+        return response()->json($Eduline);
+    }
     /**
      * Update the specified resource in storage.
      *

@@ -237,6 +237,48 @@ class AnalyticController extends Controller
     }
 
 
+    public function dashboard61()
+    {
+        $ress = DB::table('hf_families')
+        ->where('hf_families.user_id','=','wellnessadmin')
+        ->get();
+        $sum = 0;
+      
+        for($i = 0;$i < count($ress);$i++){
+            $ids = $ress[$i]->id;
+            $resss = DB::table('hf_family_members')
+            ->where('hf_family_members.family_id','=',$ids)
+            ->get();
+            $a = $resss->count();
+            $sum = $sum + $a;
+        } 
+        $student=0;
+        for($i = 0;$i < count($ress);$i++){
+            $idss = $ress[$i]->id;
+            $ressd = DB::table('hf_family_members')
+            ->LeftJoin('hf_family_member_academies','hf_family_member_academies.family_member_id','hf_family_members.id')
+            ->LeftJoin('hf_academic_details','hf_academic_details.id','hf_family_member_academies.academy_detail_id')
+    
+            ->where('hf_family_members.family_id','=',$idss)
+            ->where('hf_family_members.occupation_type','=',"Student")
+            ->where('hf_family_member_academies.type','=',"General")
+            // ->where('hf_family_member_academies.type','=',"General")
+            ->where('hf_family_member_academies.status','=',"Pursuing")
+            ->get();
+            $a = $ressd->count();
+            $student = $student + $a;
+        }
+        $bpl = DB::table('hf_families')
+        ->where('hf_families.user_id','=','wellnessadmin')
+        ->where('hf_families.ration_card_type','=','BPL')
+        ->get();
+        return response()->json([
+            'family' => $ress,
+            'familyMembers' => $sum,
+            'familyStudent' => $student,
+            'familyBpl' => $bpl,
+        ]);
+    }
 
 
 
