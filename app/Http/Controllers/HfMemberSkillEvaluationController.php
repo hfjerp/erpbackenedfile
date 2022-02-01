@@ -471,6 +471,69 @@ class HfMemberSkillEvaluationController extends Controller
     }
 
 
+
+
+
+
+
+
+    public function SkillTableChart($id,$year)
+    {
+
+        $y = $year;
+
+        $arr = [
+            'dummy' => '100',
+            'Jan' => '01',
+            'Feb' => '02',
+            'Mar' => '03',
+            'Apr' => '04',
+            'May' => '05',
+            'Jun' => '06',
+            'Jul' => '07',
+            'Aug' => '08',
+            'Sep' => '09',
+            'Oct' => '10',
+            'Nov' => '11',
+            'Dec' => '12',
+        ];
+        foreach ($arr as $key => $value) {
+            $arr2[] = $y."-".$value; 
+            $m[] = $key;
+       
+        }
+
+        for($i = 0;$i < count($arr2); $i++ ){
+            $mark = DB::table('hf_member_skill_evaluations')
+            ->where('hf_member_skill_evaluations.family_member_id','=',$id)
+            ->where('date', 'like',$year.'%')
+            ->join('hf_skill_lists','hf_skill_lists.skl_id','hf_member_skill_evaluations.skl_id')
+            ->select('hf_skill_lists.skl_id as skills_table_id','hf_skill_lists.*','hf_member_skill_evaluations.*')
+            ->get(['marks','skl_id','date']);
+            
+            
+
+
+
+        }
+
+
+
+        return response()->json($mark);
+    }
+
+
+    public function updateskillmark(Request $request,$id)
+    {
+        $eval=HfMemberSkillEvaluation::where('skill_id',$id);
+        $eval->update([
+            'date'=> $request->date,
+            'marks'=> $request->marks,
+        ]);
+        // $role -> name=$request->input('name');
+        // $role->update();
+        return response()->json($request);
+    }
     /**
      * Update the specified resource in storage.
      *

@@ -92,6 +92,12 @@ Route::get('AssessLineGraph/{id}', [HfAssessMarksController::class,'AssessLineGr
 Route::get('AicuLineChart/{id}/{year}', [HfAssessMarksController::class,'AicuLineChart'] );
 Route::get('AicuCurveChart/{id}', [HfAssessMarksController::class,'AicuCurveChart'] );
 Route::get('AicuTableChart/{id}/{year}', [HfAssessMarksController::class,'AicuTableChart'] );
+Route::get('SkillTableChart/{id}/{year}', [HfMemberSkillEvaluationController::class,'SkillTableChart'] );
+Route::get('ValueTableChart/{id}/{year}', [HfMemberValuesEvaluationsController::class,'ValueTableChart'] );
+Route::put('updateaicu/{id}', [HfAssessMarksController::class,'updateaicu'] );
+Route::put('updateskillmark/{id}', [HfMemberSkillEvaluationController::class,'updateskillmark'] );
+Route::put('updatevaluemark/{id}', [HfMemberValuesEvaluationsController::class,'updatevaluemark'] );
+Route::get('AicuTableCurveChart/{id}/{year}', [HfAssessMarksController::class,'AicuTableCurveChart'] );
 Route::get('getAllAicuMarks/{id}', [HfAssessMarksController::class,'getAllAicuMarks'] );
 Route::get('EduAssessLineGraph/{id}', [HfEduAssessController::class,'EduAssessLineGraph'] );
 Route::get('EduAssessLineGraph2/{id}', [HfEduAssessController::class,'EduAssessLineGraph2'] );
